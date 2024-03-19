@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">WoofJooy</string>
+    <string name="boa_vindas_login">Bem-vindo(a) de volta!</string>
+    <string name="titulo_entrada">Entrar como...</string>
+    <string name="parceiro">Parceiro</string>
+    <string name="cliente">Cliente</string>
+    <string name="label_senha">Senha</string>
+    <string name="label_email">Email</string>
+    <string name="title_activity_feed">Feed</string>
+    <string name="txt_botao_login">Login</string>
+    <string name="title_activity_select_type_perfil">SelectTypePerfil</string>
+    <string name="title_activity_start">Start</string>
+</resources>
