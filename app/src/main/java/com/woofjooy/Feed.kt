@@ -35,9 +35,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.woofjooy.client.RetrofitClient
 import com.woofjooy.dados.Cliente
 import com.woofjooy.dados.Parceiro
+import com.woofjooy.dados.Usuario
 import com.woofjooy.ui.theme.ui.theme.WoofJooyTheme
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.time.format.TextStyle
 
 class Feed : ComponentActivity() {
@@ -59,8 +64,29 @@ class Feed : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    val parceiros = remember { mutableStateListOf<Parceiro>() }
+    val parceiros = remember { mutableStateListOf<Usuario>() }
     val expandida = remember { mutableStateOf(false) }
+
+
+
+    RetrofitClient.instance.listUsers().enqueue(object : Callback<List<Usuario>> {
+        override fun onResponse(call: Call<List<Usuario>>, response: Response<List<Usuario>>) {
+            if (response.isSuccessful) {
+                val lista = response.body()
+                if (lista != null){
+                    parceiros.clear()
+                    parceiros.addAll(lista)
+                }
+            } else {
+                // Trate erros, como um código de resposta 404 ou 500
+            }
+        }
+
+        override fun onFailure(call: Call<List<Usuario>>, t: Throwable) {
+            // Trate falhas na chamada de rede, como um problema de conexão
+        }
+    })
+
 
     Column {
 
@@ -70,10 +96,10 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             items(items = parceiros){
                 Box{
                     Row {
-                        Image(painter = , contentDescription = )
+                        //Image(painter = , contentDescription = )
                         Column {
                             LazyRow{
-                                items(items = it.servicos){
+                                items(items = it.listItens){
 
                                     Text("#DogWalker")
                                 }
