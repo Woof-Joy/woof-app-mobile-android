@@ -1,6 +1,5 @@
-package com.woofjooy.dados
+package com.woofjooy.datas
 
-import android.provider.ContactsContract.CommonDataKinds.Email
 import java.time.LocalDate
 
 data class Usuario (

@@ -1,4 +1,4 @@
-package com.woofjooy.dados
+package com.woofjooy.datas
 
 data class Cliente (
     val id:Int,

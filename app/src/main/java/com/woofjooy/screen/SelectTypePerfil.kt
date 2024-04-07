@@ -1,38 +1,29 @@
-package com.woofjooy
+package com.woofjooy.screen
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.woofjooy.R
+import com.woofjooy.componets.BotaoSelecionePerfil
 import com.woofjooy.ui.theme.WoofJooyTheme
 
 class SelectTypePerfil : ComponentActivity() {
@@ -54,6 +45,7 @@ class SelectTypePerfil : ComponentActivity() {
 
 @Composable
 fun SelecionePerfil(name: String, modifier: Modifier = Modifier) {
+    val contexto = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -63,15 +55,22 @@ fun SelecionePerfil(name: String, modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ){
 
-        Text(text=stringResource(R.string.titulo_entrada), fontSize = 24.sp,
-                style = TextStyle(colorResource(R.color.rosa_escuro),
+        Text(text= stringResource(R.string.titulo_entrada), fontSize = 24.sp,
+            style = TextStyle(
+                colorResource(R.color.rosa_escuro),
                 fontWeight = FontWeight.Bold)
         )
         Column (
             horizontalAlignment = Alignment.CenterHorizontally
         ){
-            BotaoSelecionePerfil(stringResource(R.string.parceiro), colorResource(R.color.rosa_claro), colorResource(R.color.rosa_escuro))
-            BotaoSelecionePerfil(stringResource(R.string.cliente), colorResource(R.color.rosa_claro), colorResource(R.color.rosa_escuro))
+            BotaoSelecionePerfil(
+                stringResource(R.string.parceiro), colorResource(R.color.rosa_claro), colorResource(
+                R.color.rosa_escuro
+            ), 0, contexto)
+            BotaoSelecionePerfil(
+                stringResource(R.string.cliente), colorResource(R.color.rosa_claro), colorResource(
+                R.color.rosa_escuro
+            ), 1, contexto)
         }
 
 
@@ -79,30 +78,9 @@ fun SelecionePerfil(name: String, modifier: Modifier = Modifier) {
 }
 
 
-@Composable
-fun BotaoSelecionePerfil(text:String, borderColor:Color, color:Color){
-    Button(
-        onClick = { /*TODO*/ },
-        modifier = Modifier
-            .padding(60.dp)
-            .fillMaxWidth()
-            .border(
-                3.dp, borderColor,
-                shape = RoundedCornerShape(30.dp)
-            )
-            .background(color, shape = RoundedCornerShape(30.dp))
-        ,
-        colors = ButtonDefaults.buttonColors(color)
-
-    ) {
-        Text(text = text, fontSize = 24.sp, modifier = Modifier
-            .padding(top = 30.dp, bottom = 30.dp))
-
-    }
-}
 
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview3() {
     WoofJooyTheme {

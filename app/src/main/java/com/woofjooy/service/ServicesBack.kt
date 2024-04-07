@@ -1,6 +1,6 @@
 package com.woofjooy.service
-import com.woofjooy.dados.Cliente
-import com.woofjooy.dados.Usuario
+import com.woofjooy.datas.Cliente
+import com.woofjooy.datas.Usuario
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

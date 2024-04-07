@@ -1,49 +1,29 @@
-package com.woofjooy
+package com.woofjooy.screen
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.woofjooy.client.RetrofitClient
-import com.woofjooy.dados.Cliente
-import com.woofjooy.dados.Parceiro
-import com.woofjooy.dados.Usuario
+import com.woofjooy.componets.CardFeed
+import com.woofjooy.datas.Usuario
 import com.woofjooy.ui.theme.ui.theme.WoofJooyTheme
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.format.TextStyle
 
 class Feed : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +35,7 @@ class Feed : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    TelaFeed("Android")
                 }
             }
         }
@@ -63,7 +43,7 @@ class Feed : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun TelaFeed(name: String, modifier: Modifier = Modifier) {
     val parceiros = remember { mutableStateListOf<Usuario>() }
     val expandida = remember { mutableStateOf(false) }
 
@@ -88,45 +68,23 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     })
 
 
-    Column {
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
+        //DESENVOLVER MENU PARA NAVEGAÇÃO DENTRO DO APP(CRIAR ARQUIVO DENTRO DA PASTA "/componets" PARA DESENVOLVER O COMPONENTE DE MENU)
 
-
-        LazyColumn{
-            items(items = parceiros){
-                Box{
-                    Row {
-                        //Image(painter = , contentDescription = )
-                        Column {
-                            LazyRow{
-                                items(items = it.listItens){
-
-                                    Text("#DogWalker")
-                                }
-                            }
-                            Text(text = "Pedro Oliveira")
-                            Text(text = "Mooca, São Paulo")
-                            Text(text = "Lorem ipsum dolor sit amet. Sed nemo amet et quibusdam amet et iste voluptas.")
-                        }
-
-                    }
-                }
-
-            }
-        }
-
-
-
-
-
-
+//        Exemplo de para a criação do menu:
 
 //        TextButton(onClick = { expandida.value = !expandida.value }) {
 //            Text("Selecione a fruta")
 //        }
 //        Box {
 //            DropdownMenu(
-//                expanded = expandida.value,
+//                expanded = expandida.value,f
 //                onDismissRequest = { expandida.value = false },
 //            ) {
 //                DropdownMenuItem(
@@ -191,14 +149,35 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 //        if (parceiros.isNotEmpty()) {
 //            Text("ID: ${parceiros.sumOf { it.id }}")
 //        }
+
+
+
+
+        //DESENVOLVER PARTE SUPERIOR COM OS FILTROS...
+
+
+
+
+       LazyColumn {
+          items(items = parceiros){
+              CardFeed()//falta adicionar atributos como lista de users, tipo de card(pensando em reaproveitar código), etc..
+
+          }
+
+       }
+
+
     }
 
 }
 
-@Preview(showBackground = true)
+
+
+
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview2() {
     WoofJooyTheme {
-        Greeting("Android")
+        TelaFeed("Android")
     }
 }

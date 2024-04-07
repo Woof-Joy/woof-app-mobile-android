@@ -1,7 +1,6 @@
-package com.woofjooy.dados
+package com.woofjooy.datas
 
 import java.time.LocalDate
-import java.util.Date
 
 data class Parceiro(
     val id:Int,

@@ -1,18 +1,26 @@
-package com.woofjooy
+package com.woofjooy.screen
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.woofjooy.ui.theme.WoofJooyTheme
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class Login : ComponentActivity() {
+
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -22,25 +30,44 @@ class Login : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting2("Android")
+                    TelaLogin("Android")
                 }
             }
         }
     }
 }
 
+
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun Greeting2(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun TelaLogin(name: String, modifier: Modifier = Modifier) {
+
+    var isLoading by remember { mutableStateOf(true) }
+
+
+    // Simula o carregamento de dados com um delay
+    MainScope().launch {
+        delay(3000) // Delay de 3 segundos para simulação
+        isLoading = false
+    }
+
+    if (isLoading) {
+        TelaInicial("Android")
+    } else {
+        SelecionePerfil("Android");
+    }
+
+
 }
+
+
+
+
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview5() {
+fun GreetingPreview() {
     WoofJooyTheme {
-        Greeting2("Android")
+        TelaLogin("Android")
     }
 }
