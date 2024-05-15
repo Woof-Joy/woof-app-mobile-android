@@ -1,14 +1,11 @@
 package com.woofjooy.screen
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,36 +15,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.FabPosition
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallTopAppBar
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -60,18 +36,9 @@ import com.woofjooy.R
 import com.woofjooy.components.Botao
 import com.woofjooy.components.CardServico
 import com.woofjooy.components.Carousel
-import com.woofjooy.components.CreatorCardFeed
-import com.woofjooy.components.Input
-import com.woofjooy.components.InputSelect
-import com.woofjooy.components.Title
-import com.woofjooy.datas.Usuario
-import com.woofjooy.ui.theme.WoofJooyTheme
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.woofjooy.screen.ui.theme.WoofJooyTheme
 
-
-class MainActivity : ComponentActivity() {
+class PerfilParceiro : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -81,31 +48,15 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    TelaLogin("Android")
+                    PerfilParceiro("Android")
                 }
             }
         }
     }
 }
 
-
-@OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun TelaLogin(name: String, modifier: Modifier = Modifier) {
-//    var isLoading by remember { mutableStateOf(true) }
-//    // Simula o carregamento de dados com um delay
-//    MainScope().launch {
-//        delay(3000) // Delay de 3 segundos para simulação
-//        isLoading = false
-//    }
-//
-//    if (isLoading) {
-//        TelaInicial("Android")
-//    } else {
-//        SelecionePerfil("Android");
-//    }
-
+fun PerfilParceiro(name: String, modifier: Modifier = Modifier) {
 
     Column (modifier = Modifier
         .fillMaxSize()
@@ -146,7 +97,7 @@ fun TelaLogin(name: String, modifier: Modifier = Modifier) {
                     color = colorResource(R.color.rosa_escuro),
                     fontSize = 12.sp,
 
-                    )
+                )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = "Lorem ipsum dolor sit amet. Sed nemo amet et quibusdamvhrthrtvrhtrvhrvhrhvr sdfdsgfdgtrhtyjnnilrbytvytj byrjtryvtyjrtbjujbewrtverttrbubtyimopç.p~iop,lbyjtjyvcrecxqezwer rzwe tryvyunuy kuimgfjgf jhjnnju",
@@ -154,13 +105,15 @@ fun TelaLogin(name: String, modifier: Modifier = Modifier) {
                     fontSize = 8.sp,
                     style = TextStyle(lineHeight = 12.sp, textAlign = TextAlign.Justify)
                 )
+
             }
+
         }
         Carousel()
         Column (
             modifier = Modifier.fillMaxWidth(0.85f),
 
-            ){
+        ){
             Text(
                 text = "Servicos",
                 color = colorResource(R.color.preto),
@@ -199,7 +152,7 @@ fun TelaLogin(name: String, modifier: Modifier = Modifier) {
                 R.color.rosa_escuro
             ), modifier = Modifier
                 .width(140.dp)) {
-
+                
             }
             Botao(texto = "Acomodações", fontSize = 12.sp, color = colorResource(R.color.branco), background = colorResource(
                 R.color.rosa_escuro
@@ -212,12 +165,10 @@ fun TelaLogin(name: String, modifier: Modifier = Modifier) {
     }
 }
 
-
-
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun GreetingPreview5() {
     WoofJooyTheme {
-        TelaLogin("Android")
+        PerfilParceiro("Android")
     }
 }

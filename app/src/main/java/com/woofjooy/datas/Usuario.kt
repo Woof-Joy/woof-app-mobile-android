@@ -1,19 +1,20 @@
 package com.woofjooy.datas
 
+import java.io.Serializable
 import java.time.LocalDate
 
 data class Usuario (
-    val id:Int,
-    val nomeCompleto:String,
-    val cpf:String,
-    val cep:String,
-    val numero:Int,
-    val email:String,
-    val senha:String,
-    val dataNasc:LocalDate,
-    val imgUsuario:String,
-    val descricao:String,
-    val parceiro:Parceiro,
-    val cliente:Cliente,
-    val listItens:List<Item>
-    )
+    val id:Int?=null,
+    val nomeCompleto:String?=null,
+    val cpf:String?=null,
+    val cep:String?=null,
+    val numero:Int?=null,
+    val email:String?=null,
+    val senha:String?=null,
+    val dataNasc:LocalDate?=null,
+    val imgUsuario:String?=null,
+    val descricao:String?=null,
+    val parceiro:Parceiro?=null,
+    val cliente:Cliente?=null,
+    val listItens:List<Item>?=null
+    ) : Serializable

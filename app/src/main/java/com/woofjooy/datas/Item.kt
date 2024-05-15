@@ -1,4 +1,10 @@
 package com.woofjooy.datas
 
-class Item {
-}
+data class Item (
+    val id:Int,
+    val categoria:String,
+    val titulo:String,
+    val endereco:Endereco,
+    val descricao:String,
+    val imagem:String
+)

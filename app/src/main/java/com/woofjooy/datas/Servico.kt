@@ -1,4 +1,6 @@
 package com.woofjooy.datas
 
-class Servico {
-}
+data class Servico (
+    val tipoServico: String? = null,
+    val valor: Double? = null
+)
