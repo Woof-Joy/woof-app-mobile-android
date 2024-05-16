@@ -113,12 +113,12 @@ fun Login(extras: Bundle?) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                Input(valCampo = email, label = stringResource(R.string.label_email), modifier = Modifier
+                Input(valCampo = email, label = stringResource(R.string.label_email), placeholder = "Digite seu email", modifier = Modifier
                     .border(3.dp, colorResource(R.color.rosa_escuro), shape = RoundedCornerShape(50.dp))
                     .width(300.dp)
                     .padding(10.dp))
                 Spacer(modifier = Modifier.height(8.dp))
-                Input(valCampo = senha, label = stringResource(R.string.label_senha), modifier = Modifier
+                Input(valCampo = senha, label = stringResource(R.string.label_senha), placeholder = "Digite sua senha", modifier = Modifier
                     .border(3.dp, colorResource(R.color.rosa_escuro), shape = RoundedCornerShape(50.dp))
                     .width(300.dp)
                     .padding(10.dp))

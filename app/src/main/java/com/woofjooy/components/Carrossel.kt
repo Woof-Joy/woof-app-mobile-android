@@ -52,8 +52,7 @@ fun Carousel() {
             modifier = Modifier
                 .weight(1f)
                 .clip(RoundedCornerShape(16.dp))
-                .background(color = Color.LightGray)
-                .padding(8.dp)
+                .background(color = Color.Transparent)
                 .clipToBounds()
         ) {
             Image(
@@ -73,24 +72,19 @@ fun Carousel() {
                     .padding(8.dp)
                     .size(32.dp)
                     .clip(RoundedCornerShape(16.dp))
-                    .background(color = Color.Transparent)
                     .graphicsLayer(rotationY = 180f)
             ) {
                 Image(painter = painterResource(R.drawable.baseline_arrow_forward_ios_24), contentDescription = "")
             }
-
-
-
             IconButton(
                 onClick = {
-                    selectedIndex.value = (selectedIndex.value - 1).coerceIn(0, images.size - 1)
+                    selectedIndex.value = (selectedIndex.value + 1).coerceIn(0, images.size - 1)
                 },
                 modifier = Modifier
-                    .align(Alignment.CenterStart)
+                    .align(Alignment.CenterEnd)
                     .padding(8.dp)
                     .size(32.dp)
                     .clip(RoundedCornerShape(16.dp))
-                    .background(color = Color.Transparent)
                     .graphicsLayer(rotationY = 180f)
             ) {
                 Image(painter = painterResource(R.drawable.baseline_arrow_back_ios_24), contentDescription = "")

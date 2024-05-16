@@ -15,6 +15,11 @@
         android:theme="@style/Theme.WoofJooy"
         tools:targetApi="31">
         <activity
+            android:name=".screen.Home"
+            android:exported="false"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.WoofJooy" />
+        <activity
             android:name=".screen.PerfilParceiro"
             android:exported="false"
             android:label="@string/title_activity_perfil_parceiro"

@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -21,11 +23,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.woofjooy.R
+import com.woofjooy.client.RetrofitClient
 import com.woofjooy.datas.Endereco
 import com.woofjooy.datas.Item
 import com.woofjooy.datas.Parceiro
 import com.woofjooy.datas.Servico
-import com.woofjooy.datas.Usuario
+import com.woofjooy.datas.ParceiroFeed
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 fun formatEndereco(end:Endereco):String{
     return "${end.bairro.capitalize()}, ${end.estado}"
@@ -34,19 +40,21 @@ fun formatEndereco(end:Endereco):String{
 @Composable
 fun CreatorCardFeed(it: Any) {
     when (it) {
-        is Parceiro ->{
+        is  ParceiroFeed ->{
             print("Usuario")
-            Card(imagem = it.imagem, titulo = "${it.nome} ${it.sobrenome}", localizacao = formatEndereco(it.endereco), descricao = it.descricao, servicos = mutableListOf())
+            Card(id = it.idParceiro, imagem = it.imgParceiro, titulo = "${it.nome} ${it.sobrenome}", localizacao = "${it.cidade}, ${it.uf}", descricao = it.descricao, servicos = mutableListOf())
         }
         is Item -> {
             print("Item")
-            Card(imagem = it.imagem, titulo = it.titulo, localizacao = formatEndereco(it.endereco), descricao = it.descricao, servicos = mutableListOf())
+            Card(id = it.id, imagem = it.imagem, titulo = it.titulo, localizacao = formatEndereco(it.endereco), descricao = it.descricao, servicos = mutableListOf())
         }
     }
 }
 
 @Composable
-fun Card(imagem:String, titulo:String, localizacao:String, descricao:String, servicos: List<Servico>) { // Alterar o card para montar com base nos parametros
+fun Card(id: Int?, imagem: String?, titulo:String, localizacao:String, descricao: String?, servicos: List<Servico>) { // Alterar o card para montar com base nos parametros
+    val boxId = remember { mutableStateOf(id!!) }
+    val parceiro = Parceiro()
     Box(
         modifier = Modifier
             .background(
@@ -55,7 +63,40 @@ fun Card(imagem:String, titulo:String, localizacao:String, descricao:String, ser
             )
             .size(350.dp, 120.dp)
             .clickable() {
+                RetrofitClient.instance
+                    .getParceiro(boxId.value)
+                    .enqueue(object :
+                        Callback<Parceiro> {
+                        override fun onResponse(
+                            call: Call<Parceiro>,
+                            response: Response<Parceiro>
+                        ) {
+                            if (response.isSuccessful) {
+                            val parceiroResponse = response.body()
+                            if (parceiroResponse != null){
+                                parceiro.copy(
+                                    idUser = parceiroResponse.idUser,
+                                    nome = parceiroResponse.nome,
+                                    aceitaDogBravo = parceiroResponse.aceitaDogBravo,
+                                    aceitaDogCio = parceiroResponse.aceitaDogCio,
+                                    aceitaDogEspecial = parceiroResponse.aceitaDogEspecial,
+                                    aceitaDogGrande = parceiroResponse.aceitaDogGrande,
+                                    aceitaDogIdoso = parceiroResponse.aceitaDogIdoso,
+                                    dataEntrada = parceiroResponse.dataEntrada,
+                                    imgParceiro = parceiroResponse.imgParceiro,
+                                    maxDogs = parceiroResponse.maxDogs,
+                                    servicos = parceiroResponse.servicos,
+                                )
+                            }
+                            } else {
+                                print("Erro ao tentar executar a função")
+                            }
+                        }
 
+                        override fun onFailure(call: Call<Parceiro>, t: Throwable) {
+                            TODO("Not yet implemented")
+                        }
+                    })
             }
     ) {
         Row(
@@ -113,7 +154,7 @@ fun Card(imagem:String, titulo:String, localizacao:String, descricao:String, ser
                     )
                 }
                 Text(
-                    text = descricao,
+                    text = descricao!!,
                     color = colorResource(
                         R.color.preto
                     ),
@@ -121,7 +162,6 @@ fun Card(imagem:String, titulo:String, localizacao:String, descricao:String, ser
                     style = TextStyle(lineHeight = 12.sp)
                 )
             }
-
         }
     }
 }

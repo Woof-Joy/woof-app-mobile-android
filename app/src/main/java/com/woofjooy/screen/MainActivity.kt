@@ -93,122 +93,17 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TelaLogin(name: String, modifier: Modifier = Modifier) {
-//    var isLoading by remember { mutableStateOf(true) }
-//    // Simula o carregamento de dados com um delay
-//    MainScope().launch {
-//        delay(3000) // Delay de 3 segundos para simulação
-//        isLoading = false
-//    }
-//
-//    if (isLoading) {
-//        TelaInicial("Android")
-//    } else {
-//        SelecionePerfil("Android");
-//    }
+    var isLoading by remember { mutableStateOf(true) }
+    // Simula o carregamento de dados com um delay
+    MainScope().launch {
+        delay(3000) // Delay de 3 segundos para simulação
+        isLoading = false
+    }
 
-
-    Column (modifier = Modifier
-        .fillMaxSize()
-        .background(color = colorResource(R.color.rosa_claro)),
-        verticalArrangement = Arrangement.SpaceAround,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row (
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically,
-        ){
-            Column (
-                verticalArrangement = Arrangement.SpaceAround,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(start = 20.dp, end = 10.dp)
-            ){
-                Image(painter = painterResource(R.mipmap.imagem_perfil_test), contentDescription = "Imagem de perfil do usuario", modifier= Modifier.size(100.dp))
-                Botao(texto = "Agendar Servico", fontSize = 8.sp,color = colorResource(R.color.branco), background = colorResource(
-                    R.color.rosa_escuro
-                ), Modifier
-                    .width(120.dp)) {
-                    //Logica para abrir o modal de agendamento
-                }
-            }
-            Column (
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.Start,
-                modifier = Modifier.padding(start = 10.dp, end = 20.dp)
-            ){
-                Text(
-                    text = "Nome",
-                    color = colorResource(R.color.preto),
-                    fontSize = 16.sp,
-                    style = TextStyle(fontWeight = FontWeight.Bold)
-                )
-                Text(
-                    text = "Bairro, Estado",
-                    color = colorResource(R.color.rosa_escuro),
-                    fontSize = 12.sp,
-
-                    )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "Lorem ipsum dolor sit amet. Sed nemo amet et quibusdamvhrthrtvrhtrvhrvhrhvr sdfdsgfdgtrhtyjnnilrbytvytj byrjtryvtyjrtbjujbewrtverttrbubtyimopç.p~iop,lbyjtjyvcrecxqezwer rzwe tryvyunuy kuimgfjgf jhjnnju",
-                    color = colorResource(R.color.preto),
-                    fontSize = 8.sp,
-                    style = TextStyle(lineHeight = 12.sp, textAlign = TextAlign.Justify)
-                )
-            }
-        }
-        Carousel()
-        Column (
-            modifier = Modifier.fillMaxWidth(0.85f),
-
-            ){
-            Text(
-                text = "Servicos",
-                color = colorResource(R.color.preto),
-                fontSize = 16.sp,
-                style = TextStyle(fontWeight = FontWeight.Bold)
-            )
-            Text(
-                text = "Quantidade de serviços: x",
-                color = colorResource(R.color.preto),
-                fontSize = 12.sp,
-
-                )
-            Spacer(modifier = Modifier.height(8.dp))
-            Row (
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
-//            parceiro.servicos.forEach {
-//                  var textValor = "R$ ${parceiro.servicos.valor}"
-//                  if (parceiro.servicos.tipoServico.equals("DogSitter")){
-//                    textValor += " / Hora"
-//                  }else{
-//                    textValor += " / Passeio"
-//                  }
-//                CardServico(servico = , textValor = )
-//            }
-                CardServico()
-                CardServico()
-            }
-        }
-        Row (
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            Botao(texto = "Observações", fontSize = 12.sp, color = colorResource(R.color.branco), background = colorResource(
-                R.color.rosa_escuro
-            ), modifier = Modifier
-                .width(140.dp)) {
-
-            }
-            Botao(texto = "Acomodações", fontSize = 12.sp, color = colorResource(R.color.branco), background = colorResource(
-                R.color.rosa_escuro
-            ), modifier = Modifier
-                .width(140.dp)) {
-
-            }
-        }
-
+    if (isLoading) {
+        TelaInicial("Android")
+    } else {
+        SelecionePerfil("Android");
     }
 }
 

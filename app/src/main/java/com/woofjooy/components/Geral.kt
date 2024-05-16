@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.RememberObserver
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -105,23 +106,24 @@ fun Title(text:String){
 }
 
 @Composable
-fun Input(valCampo: MutableState<String>, label:String = "", placeholder:String = "", fontSize:TextUnit=0.sp, modifier: Modifier){
-    Column{
+fun Input(
+    valCampo: MutableState<String>,
+    label: String = "",
+    placeholder: String = "",
+    fontSize: TextUnit = 16.sp,
+    modifier: Modifier = Modifier
+) {
+    Column {
         if (label.isNotBlank()) {
-            Text(text = label, color = colorResource(R.color.preto))
+            Text(text = label, color = Color.Black)
         }
         BasicTextField(
             value = valCampo.value,
             onValueChange = { valCampo.value = it },
-            modifier = modifier
-        ){
-            if (placeholder.isNotBlank()){
-                Text(text = placeholder, color = Color.Gray, modifier = Modifier.padding(6.dp), fontSize=fontSize)
-            }
-
-        }
+            modifier = modifier,
+            textStyle = TextStyle(fontSize = fontSize, color = Color.Black)
+        )
     }
-
 }
 @Composable
 fun InputSelect(searchText: MutableState<String>, options: List<String>, label:String="", placeholder: String="", onOptionSelected: (String) -> Unit){
