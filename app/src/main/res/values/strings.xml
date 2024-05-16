@@ -12,4 +12,24 @@
     <string name="title_activity_start">Start</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_perfil_parceiro">PerfilParceiro</string>
+    <string name="placeholder_search">Pesquise</string>
+    <string name="text_location">Sua localização</string>
+    <string name="contentDescription_img_location">Icone para representar localização</string>
+    <string name="label_selectBox_tipo_servico">Tipo de Serviço:</string>
+    <string name="label_selectBox_ordenacao_servico">Ordenar por:</string>
+    <string name="selectBox_tipo_servico1">DogWalker</string>
+    <string name="selectBox_tipo_servico2">DogSitter</string>
+    <string name="selectBox_tipo_servico3">Ambos</string>
+    <string name="contentDescription_img_logo">Logo da marca woofjoy</string>
+    <string name="erro_requisicao">Erro ao tentar executar a função</string>
+    <string name="text_nao_tem_conta">Ainda não tem uma conta?</string>
+    <string name="text_cadastrese">Ainda não tem uma conta?</string>
+    <string name="contentDescription_img_perfil">Imagem de perfil do usuario</string>
+    <string name="text_botao_agendar">Agendar Servico</string>
+    <string name="label_nome">Nome</string>
+    <string name="label_localizacao">Bairro, Estado</string>
+    <string name="lorem">Lorem ipsum dolor sit amet. Sed nemo amet et quibusdamvhrthrtvrhtrvhrvhrhvr sdfdsgfdgtrhtyjnnilrbytvytj byrjtryvtyjrtbjujbewrtverttrbubtyimopç.p~iop,lbyjtjyvcrecxqezwer rzwe tryvyunuy kuimgfjgf jhjnnju</string>
+    <string name="label_servicos">Servicos</string>
+    <string name="label_obs">Observações</string>
+    <string name="label_acomodacoes">Acomodações</string>
 </resources>

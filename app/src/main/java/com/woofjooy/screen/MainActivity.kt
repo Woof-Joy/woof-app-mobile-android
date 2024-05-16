@@ -6,9 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,38 +16,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.FabPosition
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallTopAppBar
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -60,15 +36,7 @@ import com.woofjooy.R
 import com.woofjooy.components.Botao
 import com.woofjooy.components.CardServico
 import com.woofjooy.components.Carousel
-import com.woofjooy.components.CreatorCardFeed
-import com.woofjooy.components.Input
-import com.woofjooy.components.InputSelect
-import com.woofjooy.components.Title
-import com.woofjooy.datas.Usuario
 import com.woofjooy.ui.theme.WoofJooyTheme
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
@@ -107,49 +75,60 @@ fun TelaLogin(name: String, modifier: Modifier = Modifier) {
 //    }
 
 
-    Column (modifier = Modifier
-        .fillMaxSize()
-        .background(color = colorResource(R.color.rosa_claro)),
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = colorResource(R.color.rosa_claro)),
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row (
+        Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically,
-        ){
-            Column (
+        ) {
+            Column(
                 verticalArrangement = Arrangement.SpaceAround,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(start = 20.dp, end = 10.dp)
-            ){
-                Image(painter = painterResource(R.mipmap.imagem_perfil_test), contentDescription = "Imagem de perfil do usuario", modifier= Modifier.size(100.dp))
-                Botao(texto = "Agendar Servico", fontSize = 8.sp,color = colorResource(R.color.branco), background = colorResource(
-                    R.color.rosa_escuro
-                ), Modifier
-                    .width(120.dp)) {
+            ) {
+                Image(
+                    painter = painterResource(R.mipmap.imagem_perfil_test),
+                    contentDescription = stringResource(id = R.string.contentDescription_img_perfil),
+                    modifier = Modifier.size(100.dp)
+                )
+                Botao(
+                    texto = stringResource(id = R.string.text_botao_agendar),
+                    fontSize = 8.sp,
+                    color = colorResource(R.color.branco),
+                    background = colorResource(
+                        R.color.rosa_escuro
+                    ),
+                    Modifier
+                        .width(120.dp)
+                ) {
                     //Logica para abrir o modal de agendamento
                 }
             }
-            Column (
+            Column(
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier.padding(start = 10.dp, end = 20.dp)
-            ){
+            ) {
                 Text(
-                    text = "Nome",
+                    text = stringResource(id = R.string.label_nome),
                     color = colorResource(R.color.preto),
                     fontSize = 16.sp,
                     style = TextStyle(fontWeight = FontWeight.Bold)
                 )
                 Text(
-                    text = "Bairro, Estado",
+                    text = stringResource(id = R.string.label_localizacao),
                     color = colorResource(R.color.rosa_escuro),
                     fontSize = 12.sp,
 
                     )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Lorem ipsum dolor sit amet. Sed nemo amet et quibusdamvhrthrtvrhtrvhrvhrhvr sdfdsgfdgtrhtyjnnilrbytvytj byrjtryvtyjrtbjujbewrtverttrbubtyimopç.p~iop,lbyjtjyvcrecxqezwer rzwe tryvyunuy kuimgfjgf jhjnnju",
+                    text = stringResource(id = R.string.lorem),
                     color = colorResource(R.color.preto),
                     fontSize = 8.sp,
                     style = TextStyle(lineHeight = 12.sp, textAlign = TextAlign.Justify)
@@ -157,12 +136,12 @@ fun TelaLogin(name: String, modifier: Modifier = Modifier) {
             }
         }
         Carousel()
-        Column (
+        Column(
             modifier = Modifier.fillMaxWidth(0.85f),
 
-            ){
+            ) {
             Text(
-                text = "Servicos",
+                text = stringResource(id = R.string.label_servicos),
                 color = colorResource(R.color.preto),
                 fontSize = 16.sp,
                 style = TextStyle(fontWeight = FontWeight.Bold)
@@ -174,10 +153,10 @@ fun TelaLogin(name: String, modifier: Modifier = Modifier) {
 
                 )
             Spacer(modifier = Modifier.height(8.dp))
-            Row (
+            Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
-            ){
+            ) {
 //            parceiro.servicos.forEach {
 //                  var textValor = "R$ ${parceiro.servicos.valor}"
 //                  if (parceiro.servicos.tipoServico.equals("DogSitter")){
@@ -191,29 +170,38 @@ fun TelaLogin(name: String, modifier: Modifier = Modifier) {
                 CardServico()
             }
         }
-        Row (
+        Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Botao(texto = "Observações", fontSize = 12.sp, color = colorResource(R.color.branco), background = colorResource(
-                R.color.rosa_escuro
-            ), modifier = Modifier
-                .width(140.dp)) {
+            Botao(
+                texto = stringResource(id = R.string.label_obs),
+                fontSize = 12.sp,
+                color = colorResource(R.color.branco),
+                background = colorResource(
+                    R.color.rosa_escuro
+                ),
+                modifier = Modifier
+                    .width(140.dp)
+            ) {
 
             }
-            Botao(texto = "Acomodações", fontSize = 12.sp, color = colorResource(R.color.branco), background = colorResource(
-                R.color.rosa_escuro
-            ), modifier = Modifier
-                .width(140.dp)) {
+            Botao(
+                texto = stringResource(id = R.string.label_acomodacoes),
+                fontSize = 12.sp,
+                color = colorResource(R.color.branco),
+                background = colorResource(
+                    R.color.rosa_escuro
+                ),
+                modifier = Modifier
+                    .width(140.dp)
+            ) {
 
             }
         }
 
     }
 }
-
-
-
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {

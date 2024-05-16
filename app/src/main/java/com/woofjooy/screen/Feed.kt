@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -89,7 +90,7 @@ fun TelaFeed(extras: Bundle?) {
         override fun onResponse(call: Call<List<Usuario>>, response: Response<List<Usuario>>) {
             if (response.isSuccessful) {
                 val lista = response.body()
-                if (lista != null){
+                if (lista != null) {
                     parceiros.clear()
                     parceiros.addAll(lista)
                 }
@@ -108,7 +109,7 @@ fun TelaFeed(extras: Bundle?) {
         modifier = Modifier
             .fillMaxSize(),
 
-    ) {
+        ) {
 
         //DESENVOLVER PARTE SUPERIOR COM OS FILTROS...
         Row(
@@ -122,42 +123,70 @@ fun TelaFeed(extras: Bundle?) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.Start
             ) {
-                Title("Feed")
+                Title(stringResource(id = R.string.title_activity_feed))
             }
             Column {
-                Row (
+                Row(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
-                ){
-                    Image(painter = painterResource(R.mipmap.lupa), contentDescription = "", modifier = Modifier.size(10.dp))
-                    Input(valCampo = filtroPesquisa,  placeholder = "Pesquise", fontSize=8.sp, modifier = Modifier
-                        .width(230.dp)
-                        .padding(10.dp)
-                        .background(
-                            color = colorResource(R.color.cinza_legenda),
-                            shape = RoundedCornerShape(15.dp)
-                        )
+                ) {
+                    Image(
+                        painter = painterResource(R.mipmap.lupa),
+                        contentDescription = "",
+                        modifier = Modifier.size(10.dp)
+                    )
+                    Input(
+                        valCampo = filtroPesquisa,
+                        placeholder = stringResource(id = R.string.placeholder_search),
+                        fontSize = 8.sp,
+                        modifier = Modifier
+                            .width(230.dp)
+                            .padding(10.dp)
+                            .background(
+                                color = colorResource(R.color.cinza_legenda),
+                                shape = RoundedCornerShape(15.dp)
+                            )
                     )
                 }
                 Row {
                     Column(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier= Modifier.padding(6.dp)
+                        modifier = Modifier.padding(6.dp)
                     ) {
-                        Text(text = "Sua localização", fontSize = 8.sp)
-                        Row (
+                        Text(text = stringResource(id = R.string.text_location), fontSize = 8.sp)
+                        Row(
                             verticalAlignment = Alignment.CenterVertically,
-                        ){
-                            Image(painter = painterResource(R.mipmap.localizacao_black), contentDescription = "Icone para representar localização", modifier = Modifier.size(8.dp).padding(1.dp))
+                        ) {
+                            Image(
+                                painter = painterResource(R.mipmap.localizacao_black),
+                                contentDescription = stringResource(
+                                    id = R.string.contentDescription_img_location
+                                ),
+                                modifier = Modifier
+                                    .size(8.dp)
+                                    .padding(1.dp)
+                            )
                             Text(text = "Centro, São Paulo", fontSize = 8.sp)
                         }
                     }
-                    InputSelect(searchText = filtroTipoServico, options = listOf("DogWalker", "DogSitter", "Ambos"), label = "Tipo de Serviço:") {
-                            filtroTipoServico.value = it
+                    InputSelect(
+                        searchText = filtroTipoServico,
+                        options = listOf(
+                            stringResource(id = R.string.selectBox_tipo_servico1),
+                            stringResource(id = R.string.selectBox_tipo_servico2),
+                            stringResource(id = R.string.selectBox_tipo_servico3)
+                        ),
+                        label = stringResource(id = R.string.label_selectBox_tipo_servico)
+                    ) {
+                        filtroTipoServico.value = it
                     }
-                    InputSelect(searchText = ordenacao, options = listOf("", "", ""), label = "Ordenar por:") {
-                            ordenacao.value = it
+                    InputSelect(
+                        searchText = ordenacao,
+                        options = listOf("", "", ""),
+                        label = stringResource(id = R.string.label_selectBox_ordenacao_servico)
+                    ) {
+                        ordenacao.value = it
                     }
 
                 }
@@ -165,19 +194,17 @@ fun TelaFeed(extras: Bundle?) {
         }
 
         //CARDS
-       LazyColumn {
-          items(items = parceiros){
-              CreatorCardFeed(it = it)//falta adicionar atributos como lista de users, tipo de card(pensando em reaproveitar código), etc..
-          }
+        LazyColumn {
+            items(items = parceiros) {
+                CreatorCardFeed(it = it)//falta adicionar atributos como lista de users, tipo de card(pensando em reaproveitar código), etc..
+            }
 
-       }
+        }
 
 
     }
 
 }
-
-
 
 
 @Preview(showBackground = true, showSystemUi = true)

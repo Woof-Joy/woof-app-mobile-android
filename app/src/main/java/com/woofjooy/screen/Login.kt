@@ -88,10 +88,10 @@ fun Login(extras: Bundle?) {
             .background(color = colorResource(R.color.rosa_escuro)),
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         Image(
             painter = painterResource(id = R.mipmap.logo_branca),
-            contentDescription = "Logo da marca woofjoy",
+            contentDescription = stringResource(id = R.string.contentDescription_img_logo),
             modifier = Modifier.size(150.dp)
         )
         Column(
@@ -101,8 +101,7 @@ fun Login(extras: Bundle?) {
                     shape = RoundedCornerShape(topStart = 80.dp, topEnd = 80.dp)
                 )
                 .height(6200.dp)
-                .fillMaxWidth()
-            ,
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -112,115 +111,137 @@ fun Login(extras: Bundle?) {
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                Input(valCampo = email, label = stringResource(R.string.label_email), modifier = Modifier
-                    .border(3.dp, colorResource(R.color.rosa_escuro), shape = RoundedCornerShape(50.dp))
-                    .width(300.dp)
-                    .padding(10.dp))
+            ) {
+                Input(
+                    valCampo = email,
+                    label = stringResource(R.string.label_email),
+                    modifier = Modifier
+                        .border(
+                            3.dp,
+                            colorResource(R.color.rosa_escuro),
+                            shape = RoundedCornerShape(50.dp)
+                        )
+                        .width(300.dp)
+                        .padding(10.dp)
+                )
                 Spacer(modifier = Modifier.height(8.dp))
-                Input(valCampo = senha, label = stringResource(R.string.label_senha), modifier = Modifier
-                    .border(3.dp, colorResource(R.color.rosa_escuro), shape = RoundedCornerShape(50.dp))
-                    .width(300.dp)
-                    .padding(10.dp))
+                Input(
+                    valCampo = senha,
+                    label = stringResource(R.string.label_senha),
+                    modifier = Modifier
+                        .border(
+                            3.dp,
+                            colorResource(R.color.rosa_escuro),
+                            shape = RoundedCornerShape(50.dp)
+                        )
+                        .width(300.dp)
+                        .padding(10.dp)
+                )
                 Spacer(modifier = Modifier.height(16.dp)) // Adiciona um espaçamento entre os TextField e o Button
-                Botao(stringResource(R.string.txt_botao_login), 16.sp,colorResource(R.color.branco), colorResource(
-                    R.color.rosa_escuro,
-                ), Modifier
-                    .padding(start = 60.dp, end = 60.dp)
-                    .width(200.dp),onClick = {
-                    val usuarioLogin = UsuarioLogin(email.value, senha.value, typePerfil!!)
-                    var usuarioLoginResponse=UsuarioLoginRespose(token = "")
-                    RetrofitClient.instance.login(usuarioLogin).enqueue(object :
-                        Callback<UsuarioLoginRespose> {
-                        override fun onResponse(
-                            call: Call<UsuarioLoginRespose>,
-                            response: Response<UsuarioLoginRespose>
-                        ) {
-                            if (response.isSuccessful) {
-                                val usuarioResponse = response.body()
-                                if (usuarioResponse != null){
-                                    usuarioLoginResponse.copy(
-                                        userId = usuarioResponse.userId,
-                                        nome = usuarioResponse.nome,
-                                        email = usuarioResponse.email,
-                                        role = usuarioResponse.role,
-                                        token = usuarioResponse.token
-                                    )
-                                }
-                            } else {
-                              print("Erro ao tentar executar a função")
-                            }
-                        }
-                        override fun onFailure(call: Call<UsuarioLoginRespose>, t: Throwable) {
-                            TODO("Not yet implemented")
-                        }
-                    })
-
-
-                    val dataUser=Usuario()
-                    RetrofitClient.instance.getUserById(userId = usuarioLoginResponse.userId!!).enqueue(object :
-                            Callback<Usuario> {
+                Botao(stringResource(R.string.txt_botao_login),
+                    16.sp,
+                    colorResource(R.color.branco),
+                    colorResource(
+                        R.color.rosa_escuro,
+                    ),
+                    Modifier
+                        .padding(start = 60.dp, end = 60.dp)
+                        .width(200.dp),
+                    onClick = {
+                        val usuarioLogin = UsuarioLogin(email.value, senha.value, typePerfil!!)
+                        var usuarioLoginResponse = UsuarioLoginRespose(token = "")
+                        RetrofitClient.instance.login(usuarioLogin).enqueue(object :
+                            Callback<UsuarioLoginRespose> {
                             override fun onResponse(
-                                call: Call<Usuario>,
-                                response: Response<Usuario>
+                                call: Call<UsuarioLoginRespose>,
+                                response: Response<UsuarioLoginRespose>
                             ) {
                                 if (response.isSuccessful) {
                                     val usuarioResponse = response.body()
-                                    if (usuarioResponse != null){
-                                        dataUser.copy(
-                                            id=usuarioResponse.id,
-                                            nomeCompleto = usuarioResponse.nomeCompleto,
-                                            cep=usuarioResponse.cep,
-                                            cpf =usuarioResponse.cpf,
-                                            dataNasc = usuarioResponse.dataNasc,
-                                            descricao = usuarioResponse.descricao,
+                                    if (usuarioResponse != null) {
+                                        usuarioLoginResponse.copy(
+                                            userId = usuarioResponse.userId,
+                                            nome = usuarioResponse.nome,
                                             email = usuarioResponse.email,
-                                            imgUsuario = usuarioResponse.imgUsuario,
-                                            senha = usuarioResponse.senha,
-                                            numero = usuarioResponse.numero,
-                                            listItens = usuarioResponse.listItens,
-                                            cliente = usuarioResponse.cliente,
-                                            parceiro = usuarioResponse.parceiro
-
+                                            role = usuarioResponse.role,
+                                            token = usuarioResponse.token
                                         )
                                     }
                                 } else {
                                     print("Erro ao tentar executar a função")
                                 }
                             }
-                            override fun onFailure(call: Call<Usuario>, t: Throwable) {
+
+                            override fun onFailure(call: Call<UsuarioLoginRespose>, t: Throwable) {
                                 TODO("Not yet implemented")
                             }
                         })
+
+
+                        val dataUser = Usuario()
+                        RetrofitClient.instance.getUserById(userId = usuarioLoginResponse.userId!!)
+                            .enqueue(object :
+                                Callback<Usuario> {
+                                override fun onResponse(
+                                    call: Call<Usuario>,
+                                    response: Response<Usuario>
+                                ) {
+                                    if (response.isSuccessful) {
+                                        val usuarioResponse = response.body()
+                                        if (usuarioResponse != null) {
+                                            dataUser.copy(
+                                                id = usuarioResponse.id,
+                                                nomeCompleto = usuarioResponse.nomeCompleto,
+                                                cep = usuarioResponse.cep,
+                                                cpf = usuarioResponse.cpf,
+                                                dataNasc = usuarioResponse.dataNasc,
+                                                descricao = usuarioResponse.descricao,
+                                                email = usuarioResponse.email,
+                                                imgUsuario = usuarioResponse.imgUsuario,
+                                                senha = usuarioResponse.senha,
+                                                numero = usuarioResponse.numero,
+                                                listItens = usuarioResponse.listItens,
+                                                cliente = usuarioResponse.cliente,
+                                                parceiro = usuarioResponse.parceiro
+
+                                            )
+                                        }
+                                    } else {
+                                        print("Erro ao tentar executar a função")
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<Usuario>, t: Throwable) {
+                                    TODO("Not yet implemented")
+                                }
+                            })
 
                         val feed = Intent(contexto, Feed::class.java)
                         feed.putExtra("userToken", usuarioLoginResponse.token)
                         feed.putExtra("dataUser", dataUser)
                         contexto.startActivity(feed)
-
-
-
-                })
+                    })
             }
 
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
+            ) {
                 Text(
-                    "Ainda não tem uma conta?"
+                    stringResource(id = R.string.text_nao_tem_conta)
                 )
-                Text("Cadastre-se", style = TextStyle(fontWeight = FontWeight.Bold, color = colorResource(
-                    R.color.rosa_escuro
-                )
-                )
+                Text(
+                    stringResource(id = R.string.text_cadastrese), style = TextStyle(
+                        fontWeight = FontWeight.Bold, color = colorResource(
+                            R.color.rosa_escuro
+                        )
+                    )
                 )
             }
 
         }
     }
 }
-
 
 
 @Preview(showBackground = true)
