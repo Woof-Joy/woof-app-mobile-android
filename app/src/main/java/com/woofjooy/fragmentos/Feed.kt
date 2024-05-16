@@ -34,15 +34,15 @@ import com.woofjooy.components.Input
 import com.woofjooy.components.InputSelect
 import com.woofjooy.components.Title
 import com.woofjooy.datas.ParceiroFeed
+import com.woofjooy.datas.ParceiroPerfil
 import com.woofjooy.datas.Usuario
-import com.woofjooy.screen.Feed
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun Feed(extras: Bundle?){
+fun Feed(extras: Bundle?, name: String="Home"){
     val parceiros = remember { mutableStateListOf<ParceiroFeed>() }
     val filtroPesquisa = remember {
         mutableStateOf("")
@@ -51,8 +51,15 @@ fun Feed(extras: Bundle?){
     val ordenacao = remember {
         mutableStateOf("")
     }
-    val usuario = extras?.getSerializable("dataUser", Usuario::class.java)
+    val perfilUsuario = remember {
+        mutableStateOf(false)
+    }
+    val parceiroPerfil = remember {
+        mutableStateOf(ParceiroPerfil())
+    }
 
+    val usuario = extras?.getSerializable("dataUser", Usuario::class.java)
+    val token = extras?.getInt("userToken")
 
     RetrofitClient.instance.getParceiros().enqueue(object : Callback<List<ParceiroFeed>> {
         override fun onResponse(call: Call<List<ParceiroFeed>>, response: Response<List<ParceiroFeed>>) {
@@ -73,74 +80,91 @@ fun Feed(extras: Bundle?){
     })
 
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-
-        ) {
-
-        //DESENVOLVER PARTE SUPERIOR COM OS FILTROS...
-        Row(
+    if (!perfilUsuario.value){
+        Column(
             modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
-        )
-        {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start
+                .fillMaxSize(),
+
             ) {
-                Title("Feed")
-            }
-            Column {
-                Row (
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Image(painter = painterResource(R.mipmap.lupa), contentDescription = "", modifier = Modifier.size(10.dp))
-                    Input(valCampo = filtroPesquisa,  placeholder = "Pesquise", fontSize=8.sp, modifier = Modifier
-                        .width(230.dp)
-                        .padding(10.dp)
-                        .background(
-                            color = colorResource(R.color.cinza_legenda),
-                            shape = RoundedCornerShape(15.dp)
+
+            //DESENVOLVER PARTE SUPERIOR COM OS FILTROS...
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            )
+            {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    Title("Feed")
+                }
+                Column {
+                    Row (
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+                        Image(painter = painterResource(R.mipmap.lupa), contentDescription = "", modifier = Modifier.size(10.dp))
+                        Input(valCampo = filtroPesquisa,  placeholder = "Pesquise", fontSize=8.sp, modifier = Modifier
+                            .width(230.dp)
+                            .padding(10.dp)
+                            .background(
+                                color = colorResource(R.color.cinza_legenda),
+                                shape = RoundedCornerShape(15.dp)
+                            )
                         )
-                    )
-                }
-                Row {
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier= Modifier.padding(6.dp)
-                    ) {
-                        Text(text = "Sua localização", fontSize = 8.sp)
-                        Row (
-                            verticalAlignment = Alignment.CenterVertically,
-                        ){
-                            Image(painter = painterResource(R.mipmap.localizacao_black), contentDescription = "Icone para representar localização", modifier = Modifier.size(8.dp).padding(1.dp))
-                            Text(text = "Centro, São Paulo", fontSize = 8.sp)
+                    }
+                    Row {
+                        Column(
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier= Modifier.padding(6.dp)
+                        ) {
+                            Text(text = "Sua localização", fontSize = 8.sp)
+                            Row (
+                                verticalAlignment = Alignment.CenterVertically,
+                            ){
+                                Image(painter = painterResource(R.mipmap.localizacao_black), contentDescription = "Icone para representar localização", modifier = Modifier
+                                    .size(8.dp)
+                                    .padding(1.dp))
+                                Text(text = "Centro, São Paulo", fontSize = 8.sp)
+                            }
                         }
-                    }
-                    InputSelect(searchText = filtroTipoServico, options = listOf("DogWalker", "DogSitter", "Ambos"), label = "Tipo de Serviço:") {
-                        filtroTipoServico.value = it
-                    }
-                    InputSelect(searchText = ordenacao, options = listOf("", "", ""), label = "Ordenar por:") {
-                        ordenacao.value = it
-                    }
+                        InputSelect(searchText = filtroTipoServico, options = listOf("DogWalker", "DogSitter", "Ambos"), label = "Tipo de Serviço:") {
+                            filtroTipoServico.value = it
+                        }
+                        InputSelect(searchText = ordenacao, options = listOf("", "", ""), label = "Ordenar por:") {
+                            ordenacao.value = it
+                        }
 
+                    }
                 }
             }
-        }
 
-        //CARDS
-        LazyColumn {
-            items(items = parceiros){
-                CreatorCardFeed(it = it)//falta adicionar atributos como lista de users, tipo de card(pensando em reaproveitar código), etc..
+            //CARDS
+            LazyColumn {
+                items(items = parceiros){
+                    CreatorCardFeed(it = it, perfilUsuario, parceiroPerfil)
+
+                    //falta adicionar atributos como lista de users, tipo de card(pensando em reaproveitar código), etc..
+                }
+
             }
 
+
         }
-
-
+    }else{
+        PerfilParceiro(
+            nome = parceiroPerfil.value.nome,
+            endereco = parceiroPerfil.value.localizacao,
+            descricao = parceiroPerfil.value.descricao,
+            servicos = parceiroPerfil.value.servicos
+        )
     }
+
+
+
+
 }

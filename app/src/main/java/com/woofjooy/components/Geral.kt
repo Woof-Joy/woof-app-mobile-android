@@ -9,43 +9,31 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.RememberObserver
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.woofjooy.R
-import com.woofjooy.datas.Servico
-import com.woofjooy.screen.Feed
 import com.woofjooy.screen.Login
 
 //Aqui iremos centralizar todos os componentes gerais ou componentes mais simples...
@@ -183,7 +171,7 @@ fun InputSelect(searchText: MutableState<String>, options: List<String>, label:S
 
 
 @Composable
-fun CardServico(servico: String="", textValor:String=""){
+fun CardServico(servico: String? ="", textValor:String=""){
     Column (
         modifier = Modifier
             .height(100.dp)
@@ -192,7 +180,7 @@ fun CardServico(servico: String="", textValor:String=""){
                 shape = RoundedCornerShape(15.dp)
             ), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.Start
     ){
-        Text(text = "Servico", color = colorResource(R.color.rosa_escuro), fontSize = 24.sp, style=TextStyle(fontWeight = FontWeight.Bold), modifier = Modifier.padding(start = 10.dp, end = 10.dp))
-        Text(text = "R$ 60,0 / passeio", color = colorResource(R.color.preto), fontSize = 16.sp, modifier = Modifier.padding(start = 10.dp, end = 10.dp))
+        Text(text = servico!!, color = colorResource(R.color.rosa_escuro), fontSize = 24.sp, style=TextStyle(fontWeight = FontWeight.Bold), modifier = Modifier.padding(start = 10.dp, end = 10.dp))
+        Text(text = textValor, color = colorResource(R.color.preto), fontSize = 16.sp, modifier = Modifier.padding(start = 10.dp, end = 10.dp))
     }
 }

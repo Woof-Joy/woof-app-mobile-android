@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.woofjooy.R
 import com.woofjooy.client.RetrofitClient
 import com.woofjooy.datas.Endereco
@@ -29,6 +31,8 @@ import com.woofjooy.datas.Item
 import com.woofjooy.datas.Parceiro
 import com.woofjooy.datas.Servico
 import com.woofjooy.datas.ParceiroFeed
+import com.woofjooy.datas.ParceiroPerfil
+import com.woofjooy.fragmentos.PerfilParceiro
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,21 +42,21 @@ fun formatEndereco(end:Endereco):String{
 }
 
 @Composable
-fun CreatorCardFeed(it: Any) {
+fun CreatorCardFeed(it: Any, novaTela:MutableState<Boolean>, parceiroPerfil: MutableState<ParceiroPerfil>) {
     when (it) {
         is  ParceiroFeed ->{
             print("Usuario")
-            Card(id = it.idParceiro, imagem = it.imgParceiro, titulo = "${it.nome} ${it.sobrenome}", localizacao = "${it.cidade}, ${it.uf}", descricao = it.descricao, servicos = mutableListOf())
+            Card(id = it.idParceiro, imagem = it.imgParceiro, titulo = "${it.nome} ${it.sobrenome}", localizacao = "${it.cidade}, ${it.uf}", descricao = it.descricao, servicos = mutableListOf(), novaTela, parceiroPerfil)
         }
         is Item -> {
             print("Item")
-            Card(id = it.id, imagem = it.imagem, titulo = it.titulo, localizacao = formatEndereco(it.endereco), descricao = it.descricao, servicos = mutableListOf())
+            Card(id = it.id, imagem = it.imagem, titulo = it.titulo, localizacao = formatEndereco(it.endereco), descricao = it.descricao, servicos = mutableListOf(), novaTela, parceiroPerfil)
         }
     }
 }
 
 @Composable
-fun Card(id: Int?, imagem: String?, titulo:String, localizacao:String, descricao: String?, servicos: List<Servico>) { // Alterar o card para montar com base nos parametros
+fun Card(id: Int?, imagem: String?, titulo:String, localizacao:String, descricao: String?, servicos: List<Servico>, novaTela:MutableState<Boolean>, parceiroPerfil: MutableState<ParceiroPerfil>) { // Alterar o card para montar com base nos parametros
     val boxId = remember { mutableStateOf(id!!) }
     val parceiro = Parceiro()
     Box(
@@ -62,7 +66,7 @@ fun Card(id: Int?, imagem: String?, titulo:String, localizacao:String, descricao
                 shape = RoundedCornerShape(40.dp)
             )
             .size(350.dp, 120.dp)
-            .clickable() {
+            .clickable {
                 RetrofitClient.instance
                     .getParceiro(boxId.value)
                     .enqueue(object :
@@ -72,22 +76,22 @@ fun Card(id: Int?, imagem: String?, titulo:String, localizacao:String, descricao
                             response: Response<Parceiro>
                         ) {
                             if (response.isSuccessful) {
-                            val parceiroResponse = response.body()
-                            if (parceiroResponse != null){
-                                parceiro.copy(
-                                    idUser = parceiroResponse.idUser,
-                                    nome = parceiroResponse.nome,
-                                    aceitaDogBravo = parceiroResponse.aceitaDogBravo,
-                                    aceitaDogCio = parceiroResponse.aceitaDogCio,
-                                    aceitaDogEspecial = parceiroResponse.aceitaDogEspecial,
-                                    aceitaDogGrande = parceiroResponse.aceitaDogGrande,
-                                    aceitaDogIdoso = parceiroResponse.aceitaDogIdoso,
-                                    dataEntrada = parceiroResponse.dataEntrada,
-                                    imgParceiro = parceiroResponse.imgParceiro,
-                                    maxDogs = parceiroResponse.maxDogs,
-                                    servicos = parceiroResponse.servicos,
-                                )
-                            }
+                                val parceiroResponse = response.body()
+                                if (parceiroResponse != null) {
+                                    parceiro.copy(
+                                        idUser = parceiroResponse.idUser,
+                                        nome = parceiroResponse.nome,
+                                        aceitaDogBravo = parceiroResponse.aceitaDogBravo,
+                                        aceitaDogCio = parceiroResponse.aceitaDogCio,
+                                        aceitaDogEspecial = parceiroResponse.aceitaDogEspecial,
+                                        aceitaDogGrande = parceiroResponse.aceitaDogGrande,
+                                        aceitaDogIdoso = parceiroResponse.aceitaDogIdoso,
+                                        dataEntrada = parceiroResponse.dataEntrada,
+                                        imgParceiro = parceiroResponse.imgParceiro,
+                                        maxDogs = parceiroResponse.maxDogs,
+                                        servicos = parceiroResponse.servicos,
+                                    )
+                                }
                             } else {
                                 print("Erro ao tentar executar a função")
                             }
@@ -97,6 +101,13 @@ fun Card(id: Int?, imagem: String?, titulo:String, localizacao:String, descricao
                             TODO("Not yet implemented")
                         }
                     })
+                parceiroPerfil.value.copy(
+                    nome = parceiro.nome,
+                    localizacao = localizacao,
+                    descricao = parceiro.descricao,
+                    servicos = parceiro.servicos,
+                )
+                novaTela.value = true
             }
     ) {
         Row(

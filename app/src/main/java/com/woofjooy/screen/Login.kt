@@ -193,7 +193,7 @@ fun Login(extras: Bundle?) {
                             }
                         })
 
-                        val feed = Intent(contexto, Feed::class.java)
+                        val feed = Intent(contexto, Home::class.java)
                         feed.putExtra("userToken", usuarioLoginResponse.token)
                         feed.putExtra("dataUser", dataUser)
                         contexto.startActivity(feed)

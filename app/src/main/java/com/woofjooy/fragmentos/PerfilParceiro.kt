@@ -27,10 +27,11 @@ import com.woofjooy.R
 import com.woofjooy.components.Botao
 import com.woofjooy.components.CardServico
 import com.woofjooy.components.Carousel
-import com.woofjooy.screen.PerfilParceiro
+import com.woofjooy.datas.Servico
+
 
 @Composable
-fun PerfilParceiro2(){
+fun PerfilParceiro(nome: String?, endereco: String?, descricao: String?, servicos: List<Servico>?){
     Column (modifier = Modifier
         .fillMaxSize()
         .background(color = colorResource(R.color.rosa_claro)),
@@ -60,20 +61,20 @@ fun PerfilParceiro2(){
                 modifier = Modifier.padding(start = 10.dp, end = 20.dp)
             ){
                 Text(
-                    text = "Nome",
+                    text = nome!!,
                     color = colorResource(R.color.preto),
                     fontSize = 16.sp,
                     style = TextStyle(fontWeight = FontWeight.Bold)
                 )
                 Text(
-                    text = "Bairro, Estado",
+                    text = endereco!!,
                     color = colorResource(R.color.rosa_escuro),
                     fontSize = 12.sp,
 
                     )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Lorem ipsum dolor sit amet. Sed nemo amet et quibusdamvhrthrtvrhtrvhrvhrhvr sdfdsgfdgtrhtyjnnilrbytvytj byrjtryvtyjrtbjujbewrtverttrbubtyimopç.p~iop,lbyjtjyvcrecxqezwer rzwe tryvyunuy kuimgfjgf jhjnnju",
+                    text = descricao!!,
                     color = colorResource(R.color.preto),
                     fontSize = 8.sp,
                     style = TextStyle(lineHeight = 12.sp, textAlign = TextAlign.Justify)
@@ -104,17 +105,16 @@ fun PerfilParceiro2(){
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
-//            parceiro.servicos.forEach {
-//                  var textValor = "R$ ${parceiro.servicos.valor}"
-//                  if (parceiro.servicos.tipoServico.equals("DogSitter")){
-//                    textValor += " / Hora"
-//                  }else{
-//                    textValor += " / Passeio"
-//                  }
-//                CardServico(servico = , textValor = )
-//            }
-                CardServico()
-                CardServico()
+            servicos!!.forEach {
+                  var textValor = "R$ ${it.valor}".replace(".", ",")
+                  if (it.tipoServico.equals("DogSitter")){
+                    textValor += " / Hora"
+                  }else{
+                    textValor += " / Passeio"
+                  }
+                CardServico(servico = it.tipoServico, textValor = textValor)
+            }
+
             }
         }
 //        Row (
