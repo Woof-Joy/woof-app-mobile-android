@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -114,51 +116,56 @@ fun Login(extras: Bundle?) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
                 Input(valCampo = email, label = stringResource(R.string.label_email), placeholder = "Digite seu email", modifier = Modifier
-                    .border(3.dp, colorResource(R.color.rosa_escuro), shape = RoundedCornerShape(50.dp))
+                    .border(
+                        3.dp,
+                        colorResource(R.color.rosa_escuro),
+                        shape = RoundedCornerShape(50.dp)
+                    )
                     .width(300.dp)
                     .padding(10.dp))
                 Spacer(modifier = Modifier.height(8.dp))
                 Input(valCampo = senha, label = stringResource(R.string.label_senha), placeholder = "Digite sua senha", modifier = Modifier
-                    .border(3.dp, colorResource(R.color.rosa_escuro), shape = RoundedCornerShape(50.dp))
+                    .border(
+                        3.dp,
+                        colorResource(R.color.rosa_escuro),
+                        shape = RoundedCornerShape(50.dp)
+                    )
                     .width(300.dp)
                     .padding(10.dp))
                 Spacer(modifier = Modifier.height(16.dp)) // Adiciona um espaçamento entre os TextField e o Button
-                Botao(stringResource(R.string.txt_botao_login), 16.sp,colorResource(R.color.branco), colorResource(
-                    R.color.rosa_escuro,
-                ), Modifier
-                    .padding(start = 60.dp, end = 60.dp)
-                    .width(200.dp),onClick = {
-                    val usuarioLogin = UsuarioLogin(email.value, senha.value, typePerfil!!)
-                    var usuarioLoginResponse=UsuarioLoginRespose(token = "")
-                    RetrofitClient.instance.login(usuarioLogin).enqueue(object :
-                        Callback<UsuarioLoginRespose> {
-                        override fun onResponse(
-                            call: Call<UsuarioLoginRespose>,
-                            response: Response<UsuarioLoginRespose>
-                        ) {
-                            if (response.isSuccessful) {
-                                val usuarioResponse = response.body()
-                                if (usuarioResponse != null){
-                                    usuarioLoginResponse.copy(
-                                        userId = usuarioResponse.userId,
-                                        nome = usuarioResponse.nome,
-                                        email = usuarioResponse.email,
-                                        role = usuarioResponse.role,
-                                        token = usuarioResponse.token
-                                    )
+                Button(
+                    onClick = {
+                        val usuarioLogin = UsuarioLogin(email.value, senha.value, typePerfil!!)
+                        var usuarioLoginResponse=UsuarioLoginRespose(token = "")
+                        RetrofitClient.instance.login(usuarioLogin).enqueue(object :
+                            Callback<UsuarioLoginRespose> {
+                            override fun onResponse(
+                                call: Call<UsuarioLoginRespose>,
+                                response: Response<UsuarioLoginRespose>
+                            ) {
+                                if (response.isSuccessful) {
+                                    val usuarioResponse = response.body()
+                                    if (usuarioResponse != null){
+                                        usuarioLoginResponse.copy(
+                                            userId = usuarioResponse.userId,
+                                            nome = usuarioResponse.nome,
+                                            email = usuarioResponse.email,
+                                            role = usuarioResponse.role,
+                                            token = usuarioResponse.token
+                                        )
+                                    }
+                                } else {
+                                    print("Erro ao tentar executar a função")
                                 }
-                            } else {
-                              print("Erro ao tentar executar a função")
                             }
-                        }
-                        override fun onFailure(call: Call<UsuarioLoginRespose>, t: Throwable) {
-                            TODO("Not yet implemented")
-                        }
-                    })
+                            override fun onFailure(call: Call<UsuarioLoginRespose>, t: Throwable) {
+                                TODO("Not yet implemented")
+                            }
+                        })
 
 
-                    val dataUser=Usuario()
-                    RetrofitClient.instance.getUserById(userId = usuarioLoginResponse.userId!!).enqueue(object :
+                        val dataUser=Usuario()
+                        RetrofitClient.instance.getUserById(userId = usuarioLoginResponse.userId!!).enqueue(object :
                             Callback<Usuario> {
                             override fun onResponse(
                                 call: Call<Usuario>,
@@ -183,6 +190,10 @@ fun Login(extras: Bundle?) {
                                             parceiro = usuarioResponse.parceiro
 
                                         )
+                                        val home = Intent(contexto, Home::class.java)
+                                        home.putExtra("userToken", usuarioLoginResponse.token)
+                                        home.putExtra("dataUser", dataUser)
+                                        contexto.startActivity(home)
                                     }
                                 } else {
                                     print("Erro ao tentar executar a função")
@@ -193,14 +204,18 @@ fun Login(extras: Bundle?) {
                             }
                         })
 
-                        val feed = Intent(contexto, Home::class.java)
-                        feed.putExtra("userToken", usuarioLoginResponse.token)
-                        feed.putExtra("dataUser", dataUser)
-                        contexto.startActivity(feed)
 
 
 
-                })
+
+                    },
+                    modifier = Modifier
+                        .padding(start = 60.dp, end = 60.dp)
+                        .width(200.dp),
+                    colors = ButtonDefaults.buttonColors(colorResource(R.color.rosa_escuro))
+                ) {
+                    Text("Entrar", color = colorResource(R.color.branco), fontSize=16.sp)
+                }
             }
 
             Column(

@@ -78,7 +78,6 @@ fun TextDescricao(){}
 
 @Composable
 fun Botao(texto:String, fontSize: TextUnit, color: Color, background: Color, modifier: Modifier, onClick:()->Unit){
-    val contexto = LocalContext.current
     Button(
         onClick = onClick,
         modifier = modifier,

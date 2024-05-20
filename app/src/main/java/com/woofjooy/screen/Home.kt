@@ -1,6 +1,7 @@
 package com.woofjooy.screen
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -22,6 +23,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -60,7 +62,7 @@ class Home : ComponentActivity() {
 @SuppressLint("NewApi")
 @Composable
 fun Home(navController: NavHostController, extras: Bundle?,modifier: Modifier = Modifier) {
-
+    val contexto = LocalContext.current
     Column (
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
@@ -74,7 +76,12 @@ fun Home(navController: NavHostController, extras: Bundle?,modifier: Modifier = 
                 Feed(extras = extras)
             }
             composable(TelasFragmentos.TELA3.name) {
-                Sair({}, {})
+                Sair({
+                    val feed = Intent(contexto, Home::class.java)
+                    contexto.startActivity(feed)
+                }, {
+                    navController.navigate(TelasFragmentos.TELA1.name)
+                })
             }
         }
 

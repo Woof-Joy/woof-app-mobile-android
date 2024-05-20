@@ -13,7 +13,7 @@ interface ServicesBack {
     @GET("/parceiros")
     fun getParceiros(): Call<List<ParceiroFeed>>
 
-    @GET("users/{id}")
+    @GET("/users/{id}")
     fun getUserById(@Path("id") userId: Int): Call<Usuario>
 
     //Cadastro
@@ -21,10 +21,10 @@ interface ServicesBack {
     fun cadastro(user:UsuarioLogin, @Path("tipo") tipo:String):Call<UsuarioLogin>
 
     //Login
-    @POST("users/login")
+    @POST("/users/login")
     fun login(user:UsuarioLogin):Call<UsuarioLoginRespose>
 
     //PerfilParceiro
-    @GET("parceiro/{id}")
+    @GET("/parceiro/{id}")
     fun getParceiro(@Path("id") id:Int):Call<Parceiro>
 }

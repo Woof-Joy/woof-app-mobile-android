@@ -147,8 +147,6 @@ fun Feed(extras: Bundle?, name: String="Home"){
             LazyColumn {
                 items(items = parceiros){
                     CreatorCardFeed(it = it, perfilUsuario, parceiroPerfil)
-
-                    //falta adicionar atributos como lista de users, tipo de card(pensando em reaproveitar código), etc..
                 }
 
             }

@@ -95,7 +95,7 @@ fun PerfilParceiro(nome: String?, endereco: String?, descricao: String?, servico
                 style = TextStyle(fontWeight = FontWeight.Bold)
             )
             Text(
-                text = "Quantidade de serviços: x",
+                text = "Quantidade de serviços: 0",
                 color = colorResource(R.color.preto),
                 fontSize = 12.sp,
 
@@ -117,23 +117,23 @@ fun PerfilParceiro(nome: String?, endereco: String?, descricao: String?, servico
 
             }
         }
-//        Row (
-//            modifier = Modifier.fillMaxWidth(),
-//            horizontalArrangement = Arrangement.SpaceEvenly
-//        ) {
-//            Botao(texto = "Observações", fontSize = 12.sp, color = colorResource(R.color.branco), background = colorResource(
-//                R.color.rosa_escuro
-//            ), modifier = Modifier
-//                .width(140.dp)) {
-//
-//            }
-//            Botao(texto = "Acomodações", fontSize = 12.sp, color = colorResource(R.color.branco), background = colorResource(
-//                R.color.rosa_escuro
-//            ), modifier = Modifier
-//                .width(140.dp)) {
-//
-//            }
-//        }
+        Row (
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Botao(texto = "Observações", fontSize = 12.sp, color = colorResource(R.color.branco), background = colorResource(
+                R.color.rosa_escuro
+            ), modifier = Modifier
+                .width(140.dp)) {
+
+            }
+            Botao(texto = "Acomodações", fontSize = 12.sp, color = colorResource(R.color.branco), background = colorResource(
+                R.color.rosa_escuro
+            ), modifier = Modifier
+                .width(140.dp)) {
+
+            }
+        }
 
     }
 }

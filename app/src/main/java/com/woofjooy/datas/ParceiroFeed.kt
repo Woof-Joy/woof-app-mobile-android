@@ -12,7 +12,7 @@ data class ParceiroFeed (
     val dataNasc: LocalDate? = null,
     val dataEntrada: LocalDate? = null,
     val estrelas:Double? = null,
-    val qtdServicosPrestados:Boolean? = null,
+    val qtdServicosPrestados:Int? = null,
     val idUsuario:Int? = null,
     val cidade:String? = null,
     val uf:String? = null,

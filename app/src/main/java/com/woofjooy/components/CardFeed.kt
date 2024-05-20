@@ -23,7 +23,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import com.woofjooy.R
 import com.woofjooy.client.RetrofitClient
 import com.woofjooy.datas.Endereco
@@ -32,7 +31,6 @@ import com.woofjooy.datas.Parceiro
 import com.woofjooy.datas.Servico
 import com.woofjooy.datas.ParceiroFeed
 import com.woofjooy.datas.ParceiroPerfil
-import com.woofjooy.fragmentos.PerfilParceiro
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,17 +44,17 @@ fun CreatorCardFeed(it: Any, novaTela:MutableState<Boolean>, parceiroPerfil: Mut
     when (it) {
         is  ParceiroFeed ->{
             print("Usuario")
-            Card(id = it.idParceiro, imagem = it.imgParceiro, titulo = "${it.nome} ${it.sobrenome}", localizacao = "${it.cidade}, ${it.uf}", descricao = it.descricao, servicos = mutableListOf(), novaTela, parceiroPerfil)
+            Card(id = it.idParceiro, imagem = it.imgParceiro, titulo = "${it.nome} ${it.sobrenome}", localizacao = "${it.cidade}, ${it.uf}", descricao = it.descricao, servicos = mutableListOf(), novaTela, parceiroPerfil, it.qtdServicosPrestados)
         }
         is Item -> {
             print("Item")
-            Card(id = it.id, imagem = it.imagem, titulo = it.titulo, localizacao = formatEndereco(it.endereco), descricao = it.descricao, servicos = mutableListOf(), novaTela, parceiroPerfil)
+            Card(id = it.id, imagem = it.imagem, titulo = it.titulo, localizacao = formatEndereco(it.endereco), descricao = it.descricao, servicos = mutableListOf(), novaTela, parceiroPerfil, 0)
         }
     }
 }
 
 @Composable
-fun Card(id: Int?, imagem: String?, titulo:String, localizacao:String, descricao: String?, servicos: List<Servico>, novaTela:MutableState<Boolean>, parceiroPerfil: MutableState<ParceiroPerfil>) { // Alterar o card para montar com base nos parametros
+fun Card(id: Int?, imagem: String?, titulo:String, localizacao:String, descricao: String?, servicos: List<Servico>, novaTela:MutableState<Boolean>, parceiroPerfil: MutableState<ParceiroPerfil>, qtdServicos: Int?) { // Alterar o card para montar com base nos parametros
     val boxId = remember { mutableStateOf(id!!) }
     val parceiro = Parceiro()
     Box(
@@ -104,6 +102,7 @@ fun Card(id: Int?, imagem: String?, titulo:String, localizacao:String, descricao
                 parceiroPerfil.value.copy(
                     nome = parceiro.nome,
                     localizacao = localizacao,
+                    qtdServicos = qtdServicos,
                     descricao = parceiro.descricao,
                     servicos = parceiro.servicos,
                 )
