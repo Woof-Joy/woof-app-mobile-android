@@ -7,8 +7,6 @@ data class Usuario (
     val id:Int?=null,
     val nomeCompleto:String?=null,
     val cpf:String?=null,
-    val cep:String?=null,
-    val numero:Int?=null,
     val email:String?=null,
     val senha:String?=null,
     val dataNasc:LocalDate?=null,
@@ -16,5 +14,7 @@ data class Usuario (
     val descricao:String?=null,
     val parceiro:Parceiro?=null,
     val cliente:Cliente?=null,
-    val listItens:List<Item>?=null
+    val role:String?=null,
+    val listItens:List<Item>?=null,
+    val endereco: EnderecoX?=null
     ) : Serializable

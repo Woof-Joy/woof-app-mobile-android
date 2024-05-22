@@ -60,8 +60,9 @@ fun Feed(extras: Bundle?, name: String="Home"){
 
     val usuario = extras?.getSerializable("dataUser", Usuario::class.java)
     val token = extras?.getInt("userToken")
-
-    RetrofitClient.instance.getParceiros().enqueue(object : Callback<List<ParceiroFeed>> {
+    val api = RetrofitClient.getApi()
+    val getParceiros = api.getParceiros()
+    getParceiros.enqueue(object : Callback<List<ParceiroFeed>> {
         override fun onResponse(call: Call<List<ParceiroFeed>>, response: Response<List<ParceiroFeed>>) {
             if (response.isSuccessful) {
                 val lista = response.body()
@@ -75,7 +76,7 @@ fun Feed(extras: Bundle?, name: String="Home"){
         }
 
         override fun onFailure(call: Call<List<ParceiroFeed>>, t: Throwable) {
-            TODO("Not yet implemented")
+
         }
     })
 

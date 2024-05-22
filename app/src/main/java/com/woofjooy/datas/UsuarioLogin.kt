@@ -5,7 +5,6 @@ import androidx.compose.ui.semantics.Role
 
 data class UsuarioLogin(
     val email: String,
+    val role:String,
     val senha:String,
-    val role:String
-) {
-}
+)

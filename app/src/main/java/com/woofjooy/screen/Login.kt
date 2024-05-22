@@ -3,6 +3,7 @@ package com.woofjooy.screen
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
@@ -135,72 +136,83 @@ fun Login(extras: Bundle?) {
                 Spacer(modifier = Modifier.height(16.dp)) // Adiciona um espaçamento entre os TextField e o Button
                 Button(
                     onClick = {
-                        val usuarioLogin = UsuarioLogin(email.value, senha.value, typePerfil!!)
+                        val usuarioLogin = UsuarioLogin(email = email.value, senha = senha.value, role= typePerfil!!)
                         var usuarioLoginResponse=UsuarioLoginRespose(token = "")
-                        RetrofitClient.instance.login(usuarioLogin).enqueue(object :
-                            Callback<UsuarioLoginRespose> {
+                        Log.d("api", "${email.value},${senha.value},${typePerfil}")
+
+                        val api = RetrofitClient.getApi()
+                        val login = api.login(usuarioLogin)
+                        login.enqueue(object : Callback<UsuarioLoginRespose> {
                             override fun onResponse(
                                 call: Call<UsuarioLoginRespose>,
                                 response: Response<UsuarioLoginRespose>
                             ) {
+                                Log.d("api", "DEU CERTO")
                                 if (response.isSuccessful) {
                                     val usuarioResponse = response.body()
                                     if (usuarioResponse != null){
-                                        usuarioLoginResponse.copy(
+                                        usuarioLoginResponse = usuarioLoginResponse.copy(
                                             userId = usuarioResponse.userId,
                                             nome = usuarioResponse.nome,
                                             email = usuarioResponse.email,
                                             role = usuarioResponse.role,
                                             token = usuarioResponse.token
                                         )
+
+
+                                        val getUser = api.getUserById(userId = usuarioLoginResponse.userId!!)
+                                        val dataUser=Usuario()
+                                        getUser.enqueue(object :
+                                            Callback<Usuario> {
+                                            override fun onResponse(
+                                                call: Call<Usuario>,
+                                                response: Response<Usuario>
+                                            ) {
+                                                Log.d("api", "DEU CERTO2")
+                                                if (response.isSuccessful) {
+                                                    val usuarioResponse = response.body()
+                                                    if (usuarioResponse != null){
+                                                        Log.d("api", "DEU CERTO2.1")
+                                                        dataUser.copy(
+                                                            id=usuarioResponse.id,
+                                                            nomeCompleto = usuarioResponse.nomeCompleto,
+
+                                                            cpf =usuarioResponse.cpf,
+                                                            dataNasc = usuarioResponse.dataNasc,
+                                                            descricao = usuarioResponse.descricao,
+                                                            email = usuarioResponse.email,
+                                                            imgUsuario = usuarioResponse.imgUsuario,
+                                                            senha = usuarioResponse.senha,
+                                                            listItens = usuarioResponse.listItens,
+                                                            cliente = usuarioResponse.cliente,
+                                                            parceiro = usuarioResponse.parceiro
+
+                                                        )
+
+                                                        Log.d("api", "DEU CERTO3")
+
+                                                        Log.d("api", "${usuarioLoginResponse.token}")
+
+                                                        val home = Intent(contexto, Home::class.java)
+                                                        home.putExtra("userToken", usuarioLoginResponse.token)
+                                                        home.putExtra("dataUser", dataUser)
+                                                        contexto.startActivity(home)
+                                                    }
+                                                } else {
+                                                    print("Erro ao tentar executar a função")
+                                                }
+                                            }
+                                            override fun onFailure(call: Call<Usuario>, t: Throwable) {
+                                            }
+                                        })
+
                                     }
                                 } else {
                                     print("Erro ao tentar executar a função")
                                 }
                             }
                             override fun onFailure(call: Call<UsuarioLoginRespose>, t: Throwable) {
-                                TODO("Not yet implemented")
-                            }
-                        })
-
-
-                        val dataUser=Usuario()
-                        RetrofitClient.instance.getUserById(userId = usuarioLoginResponse.userId!!).enqueue(object :
-                            Callback<Usuario> {
-                            override fun onResponse(
-                                call: Call<Usuario>,
-                                response: Response<Usuario>
-                            ) {
-                                if (response.isSuccessful) {
-                                    val usuarioResponse = response.body()
-                                    if (usuarioResponse != null){
-                                        dataUser.copy(
-                                            id=usuarioResponse.id,
-                                            nomeCompleto = usuarioResponse.nomeCompleto,
-                                            cep=usuarioResponse.cep,
-                                            cpf =usuarioResponse.cpf,
-                                            dataNasc = usuarioResponse.dataNasc,
-                                            descricao = usuarioResponse.descricao,
-                                            email = usuarioResponse.email,
-                                            imgUsuario = usuarioResponse.imgUsuario,
-                                            senha = usuarioResponse.senha,
-                                            numero = usuarioResponse.numero,
-                                            listItens = usuarioResponse.listItens,
-                                            cliente = usuarioResponse.cliente,
-                                            parceiro = usuarioResponse.parceiro
-
-                                        )
-                                        val home = Intent(contexto, Home::class.java)
-                                        home.putExtra("userToken", usuarioLoginResponse.token)
-                                        home.putExtra("dataUser", dataUser)
-                                        contexto.startActivity(home)
-                                    }
-                                } else {
-                                    print("Erro ao tentar executar a função")
-                                }
-                            }
-                            override fun onFailure(call: Call<Usuario>, t: Throwable) {
-                                TODO("Not yet implemented")
+                                Log.d("api", "ERRO")
                             }
                         })
 
@@ -237,14 +249,6 @@ fun Login(extras: Bundle?) {
 }
 
 
-
-@Preview(showBackground = true)
-@Composable
-fun LoginPreview() {
-    com.woofjooy.screen.ui.theme.WoofJooyTheme {
-        Login()
-    }
-}
 
 
 

@@ -65,8 +65,10 @@ fun Card(id: Int?, imagem: String?, titulo:String, localizacao:String, descricao
             )
             .size(350.dp, 120.dp)
             .clickable {
-                RetrofitClient.instance
-                    .getParceiro(boxId.value)
+
+                val api = RetrofitClient.getApi()
+                val getParceiro = api.getParceiro(boxId.value)
+                getParceiro
                     .enqueue(object :
                         Callback<Parceiro> {
                         override fun onResponse(

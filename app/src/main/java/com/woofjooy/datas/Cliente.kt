@@ -1,6 +1,6 @@
 package com.woofjooy.datas
 
 data class Cliente (
-    val id:Int,
-    val dogList:List<Dog>
+    val idCliente:Int,
+    val idUser:Int
 )
