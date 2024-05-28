@@ -23,7 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.woofjooy.R
-import com.woofjooy.componets.BotaoSelecionePerfil
+import com.woofjooy.components.BotaoSelecionePerfil
+import com.woofjooy.components.Input
 import com.woofjooy.ui.theme.WoofJooyTheme
 
 class SelectTypePerfil : ComponentActivity() {
@@ -66,11 +67,11 @@ fun SelecionePerfil(name: String, modifier: Modifier = Modifier) {
             BotaoSelecionePerfil(
                 stringResource(R.string.parceiro), colorResource(R.color.rosa_claro), colorResource(
                 R.color.rosa_escuro
-            ), 0, contexto)
+            ), "P", contexto)
             BotaoSelecionePerfil(
                 stringResource(R.string.cliente), colorResource(R.color.rosa_claro), colorResource(
                 R.color.rosa_escuro
-            ), 1, contexto)
+            ), "C", contexto)
         }
 
 
