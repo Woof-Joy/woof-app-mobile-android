@@ -61,29 +61,6 @@ fun Feed(extras: Bundle?, name: String="Home"){
     val usuario = extras?.getParcelable<UsuarioLoginRespose>("dataUser")
     val token = extras?.getInt("userToken")
     val api = RetrofitService.getApi()
-    val getParceiros = api.getParceiros()
-
-
-
-
-
-    getParceiros.enqueue(object : Callback<List<ParceiroFeed>> {
-        override fun onResponse(call: Call<List<ParceiroFeed>>, response: Response<List<ParceiroFeed>>) {
-            if (response.isSuccessful) {
-                val lista = response.body()
-                if (lista != null){
-                    parceiros.clear()
-                    parceiros.addAll(lista)
-                }
-            } else {
-                // Trate erros, como um código de resposta 404 ou 500
-            }
-        }
-
-        override fun onFailure(call: Call<List<ParceiroFeed>>, t: Throwable) {
-
-        }
-    })
 
 
     if (!perfilUsuario.value){
