@@ -3,7 +3,7 @@ import com.woofjooy.service.ServicesBack
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitClient {
+object RetrofitService {
     const val BASE_URL = "http://100.28.61.16/api/"
     fun getApi(): ServicesBack {
         val cliente =

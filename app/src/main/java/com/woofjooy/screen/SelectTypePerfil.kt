@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.woofjooy.R
 import com.woofjooy.components.BotaoSelecionePerfil
+import com.woofjooy.components.Input
 import com.woofjooy.ui.theme.WoofJooyTheme
 
 class SelectTypePerfil : ComponentActivity() {

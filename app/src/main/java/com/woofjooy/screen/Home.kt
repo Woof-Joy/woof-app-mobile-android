@@ -77,8 +77,8 @@ fun Home(navController: NavHostController, extras: Bundle?,modifier: Modifier = 
             }
             composable(TelasFragmentos.TELA3.name) {
                 Sair({
-                    val feed = Intent(contexto, Home::class.java)
-                    contexto.startActivity(feed)
+                    val inicio = Intent(contexto, MainActivity::class.java)
+                    contexto.startActivity(inicio)
                 }, {
                     navController.navigate(TelasFragmentos.TELA1.name)
                 })

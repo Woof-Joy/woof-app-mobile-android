@@ -28,14 +28,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.woofjooy.R
-import com.woofjooy.client.RetrofitClient
+import com.woofjooy.client.RetrofitService
 import com.woofjooy.components.CreatorCardFeed
 import com.woofjooy.components.Input
 import com.woofjooy.components.InputSelect
 import com.woofjooy.components.Title
 import com.woofjooy.datas.ParceiroFeed
 import com.woofjooy.datas.ParceiroPerfil
-import com.woofjooy.datas.Usuario
+import com.woofjooy.datas.UsuarioLoginRespose
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -58,10 +58,15 @@ fun Feed(extras: Bundle?, name: String="Home"){
         mutableStateOf(ParceiroPerfil())
     }
 
-    val usuario = extras?.getSerializable("dataUser", Usuario::class.java)
+    val usuario = extras?.getParcelable<UsuarioLoginRespose>("dataUser")
     val token = extras?.getInt("userToken")
-    val api = RetrofitClient.getApi()
+    val api = RetrofitService.getApi()
     val getParceiros = api.getParceiros()
+
+
+
+
+
     getParceiros.enqueue(object : Callback<List<ParceiroFeed>> {
         override fun onResponse(call: Call<List<ParceiroFeed>>, response: Response<List<ParceiroFeed>>) {
             if (response.isSuccessful) {
@@ -130,7 +135,7 @@ fun Feed(extras: Bundle?, name: String="Home"){
                                 Image(painter = painterResource(R.mipmap.localizacao_black), contentDescription = "Icone para representar localização", modifier = Modifier
                                     .size(8.dp)
                                     .padding(1.dp))
-                                Text(text = "Centro, São Paulo", fontSize = 8.sp)
+                                Text(text = "${usuario?.endereco?.localidade}, ${usuario?.endereco?.uf}", fontSize = 8.sp)
                             }
                         }
                         InputSelect(searchText = filtroTipoServico, options = listOf("DogWalker", "DogSitter", "Ambos"), label = "Tipo de Serviço:") {

@@ -36,15 +36,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.woofjooy.R
-import com.woofjooy.client.RetrofitClient
-import com.woofjooy.components.Botao
+import com.woofjooy.client.RetrofitService
 import com.woofjooy.components.Input
 import com.woofjooy.components.Title
-import com.woofjooy.datas.Usuario
 import com.woofjooy.datas.UsuarioLogin
 import com.woofjooy.datas.UsuarioLoginRespose
 import com.woofjooy.ui.theme.WoofJooyTheme
@@ -140,7 +137,7 @@ fun Login(extras: Bundle?) {
                         var usuarioLoginResponse=UsuarioLoginRespose(token = "")
                         Log.d("api", "${email.value},${senha.value},${typePerfil}")
 
-                        val api = RetrofitClient.getApi()
+                        val api = RetrofitService.getApi()
                         val login = api.login(usuarioLogin)
                         login.enqueue(object : Callback<UsuarioLoginRespose> {
                             override fun onResponse(
@@ -156,55 +153,22 @@ fun Login(extras: Bundle?) {
                                             nome = usuarioResponse.nome,
                                             email = usuarioResponse.email,
                                             role = usuarioResponse.role,
-                                            token = usuarioResponse.token
+                                            token = usuarioResponse.token,
+                                            nomeCompleto = usuarioResponse.nomeCompleto,
+                                            cpf =usuarioResponse.cpf,
+                                            dataNasc = usuarioResponse.dataNasc,
+                                            descricao = usuarioResponse.descricao,
+                                            imgUsuario = usuarioResponse.imgUsuario,
+                                            senha = usuarioResponse.senha,
+                                            listItens = usuarioResponse.listItens,
+                                            cliente = usuarioResponse.cliente,
+                                            parceiro = usuarioResponse.parceiro
                                         )
 
-
-                                        val getUser = api.getUserById(userId = usuarioLoginResponse.userId!!)
-                                        val dataUser=Usuario()
-                                        getUser.enqueue(object :
-                                            Callback<Usuario> {
-                                            override fun onResponse(
-                                                call: Call<Usuario>,
-                                                response: Response<Usuario>
-                                            ) {
-                                                Log.d("api", "DEU CERTO2")
-                                                if (response.isSuccessful) {
-                                                    val usuarioResponse = response.body()
-                                                    if (usuarioResponse != null){
-                                                        Log.d("api", "DEU CERTO2.1")
-                                                        dataUser.copy(
-                                                            id=usuarioResponse.id,
-                                                            nomeCompleto = usuarioResponse.nomeCompleto,
-
-                                                            cpf =usuarioResponse.cpf,
-                                                            dataNasc = usuarioResponse.dataNasc,
-                                                            descricao = usuarioResponse.descricao,
-                                                            email = usuarioResponse.email,
-                                                            imgUsuario = usuarioResponse.imgUsuario,
-                                                            senha = usuarioResponse.senha,
-                                                            listItens = usuarioResponse.listItens,
-                                                            cliente = usuarioResponse.cliente,
-                                                            parceiro = usuarioResponse.parceiro
-
-                                                        )
-
-                                                        Log.d("api", "DEU CERTO3")
-
-                                                        Log.d("api", "${usuarioLoginResponse.token}")
-
-                                                        val home = Intent(contexto, Home::class.java)
-                                                        home.putExtra("userToken", usuarioLoginResponse.token)
-                                                        home.putExtra("dataUser", dataUser)
-                                                        contexto.startActivity(home)
-                                                    }
-                                                } else {
-                                                    print("Erro ao tentar executar a função")
-                                                }
-                                            }
-                                            override fun onFailure(call: Call<Usuario>, t: Throwable) {
-                                            }
-                                        })
+                                        val home = Intent(contexto, Home::class.java)
+                                        home.putExtra("userToken", usuarioLoginResponse.token)
+                                        home.putExtra("dataUser", usuarioLoginResponse)
+                                        contexto.startActivity(home)
 
                                     }
                                 } else {

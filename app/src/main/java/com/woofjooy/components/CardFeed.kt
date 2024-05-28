@@ -24,8 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.woofjooy.R
-import com.woofjooy.client.RetrofitClient
-import com.woofjooy.datas.Endereco
+import com.woofjooy.client.RetrofitService
 import com.woofjooy.datas.Item
 import com.woofjooy.datas.Parceiro
 import com.woofjooy.datas.Servico
@@ -35,26 +34,23 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-fun formatEndereco(end:Endereco):String{
-    return "${end.bairro.capitalize()}, ${end.estado}"
-}
 
 @Composable
 fun CreatorCardFeed(it: Any, novaTela:MutableState<Boolean>, parceiroPerfil: MutableState<ParceiroPerfil>) {
     when (it) {
         is  ParceiroFeed ->{
             print("Usuario")
-            Card(id = it.idParceiro, imagem = it.imgParceiro, titulo = "${it.nome} ${it.sobrenome}", localizacao = "${it.cidade}, ${it.uf}", descricao = it.descricao, servicos = mutableListOf(), novaTela, parceiroPerfil, it.qtdServicosPrestados)
+            Card(id = it.idParceiro, titulo = "${it.nome} ${it.sobrenome}", localizacao = "${it.cidade}, ${it.uf}", descricao = it.descricao, servicos = mutableListOf(), novaTela, parceiroPerfil, it.qtdServicosPrestados)
         }
         is Item -> {
             print("Item")
-            Card(id = it.id, imagem = it.imagem, titulo = it.titulo, localizacao = formatEndereco(it.endereco), descricao = it.descricao, servicos = mutableListOf(), novaTela, parceiroPerfil, 0)
+            //Card(id = it.id, imagem = it.imagem, titulo = it.titulo, localizacao = formatEndereco(it.endereco), descricao = it.descricao, servicos = mutableListOf(), novaTela, parceiroPerfil, 0)
         }
     }
 }
 
 @Composable
-fun Card(id: Int?, imagem: String?, titulo:String, localizacao:String, descricao: String?, servicos: List<Servico>, novaTela:MutableState<Boolean>, parceiroPerfil: MutableState<ParceiroPerfil>, qtdServicos: Int?) { // Alterar o card para montar com base nos parametros
+fun Card(id: Int?, titulo:String, localizacao:String, descricao: String?, servicos: List<Servico>, novaTela:MutableState<Boolean>, parceiroPerfil: MutableState<ParceiroPerfil>, qtdServicos: Int?) { // Alterar o card para montar com base nos parametros
     val boxId = remember { mutableStateOf(id!!) }
     val parceiro = Parceiro()
     Box(
@@ -66,49 +62,7 @@ fun Card(id: Int?, imagem: String?, titulo:String, localizacao:String, descricao
             .size(350.dp, 120.dp)
             .clickable {
 
-                val api = RetrofitClient.getApi()
-                val getParceiro = api.getParceiro(boxId.value)
-                getParceiro
-                    .enqueue(object :
-                        Callback<Parceiro> {
-                        override fun onResponse(
-                            call: Call<Parceiro>,
-                            response: Response<Parceiro>
-                        ) {
-                            if (response.isSuccessful) {
-                                val parceiroResponse = response.body()
-                                if (parceiroResponse != null) {
-                                    parceiro.copy(
-                                        idUser = parceiroResponse.idUser,
-                                        nome = parceiroResponse.nome,
-                                        aceitaDogBravo = parceiroResponse.aceitaDogBravo,
-                                        aceitaDogCio = parceiroResponse.aceitaDogCio,
-                                        aceitaDogEspecial = parceiroResponse.aceitaDogEspecial,
-                                        aceitaDogGrande = parceiroResponse.aceitaDogGrande,
-                                        aceitaDogIdoso = parceiroResponse.aceitaDogIdoso,
-                                        dataEntrada = parceiroResponse.dataEntrada,
-                                        imgParceiro = parceiroResponse.imgParceiro,
-                                        maxDogs = parceiroResponse.maxDogs,
-                                        servicos = parceiroResponse.servicos,
-                                    )
-                                }
-                            } else {
-                                print("Erro ao tentar executar a função")
-                            }
-                        }
 
-                        override fun onFailure(call: Call<Parceiro>, t: Throwable) {
-                            TODO("Not yet implemented")
-                        }
-                    })
-                parceiroPerfil.value.copy(
-                    nome = parceiro.nome,
-                    localizacao = localizacao,
-                    qtdServicos = qtdServicos,
-                    descricao = parceiro.descricao,
-                    servicos = parceiro.servicos,
-                )
-                novaTela.value = true
             }
     ) {
         Row(

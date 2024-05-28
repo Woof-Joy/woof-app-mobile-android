@@ -79,7 +79,7 @@ fun TextDescricao(){}
 @Composable
 fun Botao(texto:String, fontSize: TextUnit, color: Color, background: Color, modifier: Modifier, onClick:()->Unit){
     Button(
-        onClick = onClick,
+        onClick = { onClick },
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(background)
     ) {
