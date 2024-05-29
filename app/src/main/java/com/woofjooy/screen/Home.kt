@@ -34,7 +34,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.woofjooy.R
 import com.woofjooy.datas.Usuario
-import com.woofjooy.fragmentos.Feed
 import com.woofjooy.fragmentos.Sair
 import com.woofjooy.fragmentos.TelasFragmentos
 import com.woofjooy.screen.ui.theme.WoofJooyTheme
@@ -73,7 +72,6 @@ fun Home(navController: NavHostController, extras: Bundle?,modifier: Modifier = 
             startDestination = TelasFragmentos.TELA1.name
         ) {
             composable(TelasFragmentos.TELA1.name) {
-                Feed(extras = extras)
             }
             composable(TelasFragmentos.TELA3.name) {
                 Sair({
