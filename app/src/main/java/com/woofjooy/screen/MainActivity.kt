@@ -69,12 +69,10 @@ import com.woofjooy.R
 import com.woofjooy.components.Botao
 import com.woofjooy.components.CardServico
 import com.woofjooy.components.Carousel
-import com.woofjooy.components.CreatorCardFeed
 import com.woofjooy.components.Input
 import com.woofjooy.components.InputSelect
 import com.woofjooy.components.Title
 import com.woofjooy.datas.Usuario
-import com.woofjooy.fragmentos.Feed
 import com.woofjooy.fragmentos.Sair
 import com.woofjooy.fragmentos.TelasFragmentos
 import com.woofjooy.ui.theme.WoofJooyTheme
