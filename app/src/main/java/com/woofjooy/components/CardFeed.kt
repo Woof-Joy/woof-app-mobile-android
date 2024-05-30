@@ -36,21 +36,7 @@ import retrofit2.Response
 
 
 @Composable
-fun CreatorCardFeed(it: Any, novaTela:MutableState<Boolean>, parceiroPerfil: MutableState<ParceiroPerfil>) {
-    when (it) {
-        is  ParceiroFeed ->{
-            print("Usuario")
-            Card(id = it.idParceiro, titulo = "${it.nome} ${it.sobrenome}", localizacao = "${it.cidade}, ${it.uf}", descricao = it.descricao, servicos = mutableListOf(), novaTela, parceiroPerfil, it.qtdServicosPrestados)
-        }
-        is Item -> {
-            print("Item")
-            //Card(id = it.id, imagem = it.imagem, titulo = it.titulo, localizacao = formatEndereco(it.endereco), descricao = it.descricao, servicos = mutableListOf(), novaTela, parceiroPerfil, 0)
-        }
-    }
-}
-
-@Composable
-fun Card(id: Int?, titulo:String, localizacao:String, descricao: String?, servicos: List<Servico>, novaTela:MutableState<Boolean>, parceiroPerfil: MutableState<ParceiroPerfil>, qtdServicos: Int?) { // Alterar o card para montar com base nos parametros
+fun Card(id:Int?) {
     val boxId = remember { mutableStateOf(id!!) }
     val parceiro = Parceiro()
     Box(
@@ -65,69 +51,6 @@ fun Card(id: Int?, titulo:String, localizacao:String, descricao: String?, servic
 
             }
     ) {
-        Row(
-            modifier = Modifier.padding(20.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-            Column(
 
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(R.mipmap.imagem_perfil_test),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(80.dp)
-                        .padding(end = 10.dp)
-                )
-            }
-
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start
-            ) {
-                if (!servicos.isEmpty()) {
-                    var textoServico = ""
-                    servicos.forEach {
-                        textoServico += "#${it.tipoServico} "
-                    }
-                    Text(
-                        text = textoServico.trim(),
-                        color = colorResource(R.color.rosa_escuro),
-                        fontSize = 8.sp
-                    )
-                }
-                Text(
-                    text = titulo,
-                    color = colorResource(R.color.preto),
-                    fontSize = 16.sp,
-                    style = TextStyle(fontWeight = FontWeight.Bold)
-                )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        painter = painterResource(R.mipmap.icone_ponto_localizacao),
-                        contentDescription = "",
-                        modifier = Modifier.size(8.dp)
-                    )
-                    Text(
-                        text = localizacao,
-                        color = colorResource(R.color.rosa_escuro),
-                        fontSize = 8.sp
-                    )
-                }
-                Text(
-                    text = descricao!!,
-                    color = colorResource(
-                        R.color.preto
-                    ),
-                    fontSize = 8.sp,
-                    style = TextStyle(lineHeight = 12.sp)
-                )
-            }
-        }
     }
 }

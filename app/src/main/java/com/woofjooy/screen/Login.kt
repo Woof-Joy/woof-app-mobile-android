@@ -53,7 +53,6 @@ class Login : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val extras = intent.extras
         setContent {
             WoofJooyTheme {
                 // A surface container using the 'background' color from the theme
@@ -61,7 +60,7 @@ class Login : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Login(extras)
+                    Login()
                 }
             }
         }
@@ -70,7 +69,7 @@ class Login : ComponentActivity() {
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun Login(extras: Bundle?) {
+fun Login(nome:String, modifier: Modifier) {
     val contexto = LocalContext.current
 
     val email = remember {
@@ -79,7 +78,9 @@ fun Login(extras: Bundle?) {
     val senha = remember {
         mutableStateOf("")
     }
-    val typePerfil = extras?.getString("typePerfil")
+    val typePerfil = remember {
+        mutableStateOf("P")
+    }
 
 
     Column(
@@ -133,7 +134,7 @@ fun Login(extras: Bundle?) {
                 Spacer(modifier = Modifier.height(16.dp)) // Adiciona um espaçamento entre os TextField e o Button
                 Button(
                     onClick = {
-                        val usuarioLogin = UsuarioLogin(email = email.value, senha = senha.value, role= typePerfil!!)
+                        val usuarioLogin = UsuarioLogin(email = email.value, senha = senha.value, role= typePerfil.value)
                         var usuarioLoginResponse=UsuarioLoginRespose(token = "")
                         Log.d("api", "${email.value},${senha.value},${typePerfil}")
 
