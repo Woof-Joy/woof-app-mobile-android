@@ -26,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,6 +38,7 @@ import com.woofjooy.datas.Parceiro
 import com.woofjooy.datas.UsuarioLogin
 import com.woofjooy.datas.UsuarioLoginRespose
 import com.woofjooy.screen.Home
+import com.woofjooy.screen.Relatorio
 import com.woofjooy.ui.theme.WoofJooyTheme
 import retrofit2.Call
 import retrofit2.Callback
@@ -189,6 +191,9 @@ fun Card(context: CardModel) {
                     }
 
                     else -> {
+                        val contexto = LocalContext.current
+                        val home = Intent(contexto, Relatorio::class.java)
+
 
                         Button(
                             colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.rosa_escuro)),
@@ -196,7 +201,7 @@ fun Card(context: CardModel) {
                                 .padding(10.dp)
                                 .fillMaxWidth(),
 
-                            onClick = { /*TODO*/ }) {
+                            onClick = { contexto.startActivity(home) }) {
                             Text(
                                 "Relatório",
                                 color = colorResource(R.color.branco),
