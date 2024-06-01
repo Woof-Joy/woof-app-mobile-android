@@ -1,22 +1,17 @@
 package com.woofjooy.components
 
-import android.content.ContentProviderClient
-import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -25,35 +20,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.woofjooy.R
-import com.woofjooy.client.RetrofitService
 import com.woofjooy.datas.CardModel
-import com.woofjooy.datas.Parceiro
-import com.woofjooy.datas.UsuarioLogin
-import com.woofjooy.datas.UsuarioLoginRespose
-import com.woofjooy.screen.Home
 import com.woofjooy.screen.Relatorio
 import com.woofjooy.ui.theme.WoofJooyTheme
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.time.LocalDateTime
 
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun Card(context: CardModel) {
+fun Card(context: CardModel, funPatch: () -> Unit, funDelete: () -> Unit) {
 
-    val boxId = remember { mutableStateOf(context.boxId!!) }
-    val idUser = remember { mutableStateOf(context.idUser!!) }
-    val funPath = remember { mutableStateOf(context.functionPath) }
-    val funDelete = remember { mutableStateOf(context.functionDelete) }
     val tipoServico = remember { mutableStateOf(context.tipoServico) }
     val status = remember { mutableStateOf(context.status) }
 
@@ -68,7 +50,7 @@ fun Card(context: CardModel) {
         else -> colorResource(R.color.branco)
     }
     val boxColor = when (status.value) {
-        "Aguardando Confirmação" -> colorResource(R.color.branco)
+        "Aguardando Confirmação" -> colorResource(R.color.rosa_claro)
         "Em Andamento" -> colorResource(R.color.rosa_claro)
         else -> colorResource(R.color.rosa_escuro)
     }
@@ -148,9 +130,7 @@ fun Card(context: CardModel) {
                                 .weight(1f)
                                 .padding(4.dp),
 
-                            onClick = { funDelete }
-
-                        ) {
+                        onClick = { funDelete() }) {
                             Text(
                                 "Recusar",
                                 color = colorResource(R.color.rosa_escuro),
@@ -164,7 +144,7 @@ fun Card(context: CardModel) {
                                 .weight(1f)
                                 .padding(4.dp),
 
-                            onClick = { funPath }) {
+                            onClick = { funPatch() }) {
                             Text(
                                 "Aceitar",
                                 color = colorResource(R.color.branco),
@@ -181,7 +161,7 @@ fun Card(context: CardModel) {
                                 .padding(5.dp)
                                 .fillMaxWidth(),
 
-                            onClick = { funPath }) {
+                            onClick = { funPatch() }) {
                             Text(
                                 "Finalizar",
                                 color = colorResource(R.color.branco),
@@ -196,15 +176,15 @@ fun Card(context: CardModel) {
 
 
                         Button(
-                            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.rosa_escuro)),
+                            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.branco)),
                             modifier = Modifier
-                                .padding(10.dp)
+                                .padding(5.dp)
                                 .fillMaxWidth(),
 
                             onClick = { contexto.startActivity(home) }) {
                             Text(
                                 "Relatório",
-                                color = colorResource(R.color.branco),
+                                color = colorResource(R.color.rosa_escuro),
                                 fontSize = 12.sp
                             )
                         }
@@ -223,16 +203,14 @@ fun GreetingPreview() {
     WoofJooyTheme {
         Card(
             CardModel(
-                1,
-                1,
-                status = "Em Andamento",
+                status = "Aguardando Confirmação",
                 dataInicio = LocalDateTime.now(),
                 dataFim = LocalDateTime.now(),
                 tipoServico = "Dog Walker",
-                cliente = "Cliente Teste",
-                functionPath = "",
-                functionDelete = ""
-            )
+                cliente = "Cliente Teste"
+            ),
+            funPatch = fun(){},
+            funDelete =fun(){}
         )
     }
 }
