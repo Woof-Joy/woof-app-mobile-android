@@ -14,4 +14,5 @@
     <string name="title_activity_perfil_parceiro">PerfilParceiro</string>
     <string name="title_activity_home">Home</string>
     <string name="title_relatorio">Relatório</string>
+    <string name="txt_informativo_relatorio">Faça um relatório detalhado sobre o serviço. Tente descrever o que foi feito, atividades com o pet e seus comportamentos.</string>
 </resources>
