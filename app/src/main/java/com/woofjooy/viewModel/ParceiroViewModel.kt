@@ -1,3 +1,4 @@
+
 package com.woofjooy.viewModel
 
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -8,6 +9,7 @@ import com.woofjooy.datas.ParceiroPerfil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 
 //class ParceiroViewModel : ViewModel(){
 //

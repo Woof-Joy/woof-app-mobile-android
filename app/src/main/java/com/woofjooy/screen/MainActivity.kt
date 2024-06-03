@@ -36,8 +36,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.woofjooy.R
+
 import com.woofjooy.fragmentos.MeuPerfil
 import com.woofjooy.fragmentos.MeuServicos
+
 import com.woofjooy.fragmentos.Sair
 import com.woofjooy.fragmentos.TelasFragmentos
 import com.woofjooy.ui.theme.WoofJooyTheme
@@ -70,72 +72,18 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TelaLogin(navController: NavHostController, extras: Bundle?, modifier: Modifier = Modifier) {
-    val contexto = LocalContext.current
-    Column (
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Bottom
-    ) {
-        NavHost(
-            modifier = Modifier.weight(1f),
-            navController = navController,
-            startDestination = TelasFragmentos.TELA1.name
-        ) {
-            composable(TelasFragmentos.TELA1.name) {
-                MeuServicos(extras = extras)
-            }
-            composable(TelasFragmentos.TELA2.name) {
-                MeuPerfil(extras = extras)
-            }
-            composable(TelasFragmentos.TELA3.name) {
-                Sair({
-                    val inicio = Intent(contexto, MainActivity::class.java)
-                    contexto.startActivity(inicio)
-                }, {
-                    navController.navigate(TelasFragmentos.TELA1.name)
-                })
-            }
-        }
-
-        Row(
-            modifier = Modifier
-                .background(color = colorResource(R.color.rosa_escuro))
-        )
-        {
-            TelasFragmentos.values().forEach {
-                TextButton(
-                    onClick = { navController.navigate(it.name) },
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(8.dp)
-                        .background(color = colorResource(R.color.rosa_escuro))
-                ) {
-                    // importar do androidx.compose...
-                    Image(
-                        painter = painterResource(id = it.imagem),
-                        contentDescription = it.descricao,
-                        modifier = Modifier.size(20.dp)
-
-                    )
-                }
-            }
-        }
+    var isLoading by remember { mutableStateOf(true) }
+    // Simula o carregamento de dados com um delay
+    MainScope().launch {
+        delay(3000) // Delay de 3 segundos para simulação
+        isLoading = false
     }
 
-
-
-
-//    var isLoading by remember { mutableStateOf(true) }
-//    // Simula o carregamento de dados com um delay
-//    MainScope().launch {
-//        delay(3000) // Delay de 3 segundos para simulação
-//        isLoading = false
-//    }
-//
-//    if (isLoading) {
-//        TelaInicial("Android")
-//    } else {
-//        Login();
-//    }
+    if (isLoading) {
+        TelaInicial("Android")
+    } else {
+        Login();
+    }
 }
 
 
