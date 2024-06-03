@@ -1,14 +1,16 @@
-//package com.woofjooy.viewModel
-//
-//import androidx.compose.runtime.snapshots.SnapshotStateList
-//import androidx.lifecycle.MutableLiveData
-//import androidx.lifecycle.ViewModel
-//import com.woofjooy.client.RetrofitService
-//import com.woofjooy.datas.ParceiroPerfil
-//import kotlinx.coroutines.CoroutineScope
-//import kotlinx.coroutines.Dispatchers
-//import kotlinx.coroutines.launch
-//
+
+package com.woofjooy.viewModel
+
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.woofjooy.client.RetrofitService
+import com.woofjooy.datas.ParceiroPerfil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+
 //class ParceiroViewModel : ViewModel(){
 //
 //
