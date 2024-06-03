@@ -1,4 +1,5 @@
 package com.woofjooy.client
+import com.woofjooy.service.CardService
 import com.woofjooy.service.ServicesBack
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,5 +15,16 @@ object RetrofitService {
                 .create(ServicesBack::class.java)
 
         return cliente
+    }
+
+    fun getApiCard(): CardService {
+        val response =
+            Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(CardService::class.java)
+
+        return response
     }
 }
