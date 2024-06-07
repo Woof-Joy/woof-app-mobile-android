@@ -26,7 +26,14 @@ import com.woofjooy.ui.theme.WoofJooyTheme
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun MeuPerfil(extras: Bundle?, name: String="Home"){}
+fun MeuPerfil(extras: Bundle?, name: String="Home"){
+
+
+
+
+
+    
+}
 //    val parceiros = remember { mutableStateListOf<ParceiroFeed>() }
 //    val habilitarEdicao = remember {
 //        mutableStateOf(false)

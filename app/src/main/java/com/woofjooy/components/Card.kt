@@ -26,7 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.woofjooy.R
-import com.woofjooy.datas.CardModel
+import com.woofjooy.datas.Servico
 import com.woofjooy.screen.Relatorio
 import com.woofjooy.ui.theme.WoofJooyTheme
 import java.time.LocalDateTime
@@ -34,7 +34,7 @@ import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun Card(context: CardModel, funPatch: () -> Unit, funDelete: () -> Unit) {
+fun Card(context: Servico, funPatch: () -> Unit, funDelete: () -> Unit) {
 
     val tipoServico = remember { mutableStateOf(context.tipoServico) }
     val status = remember { mutableStateOf(context.status) }
@@ -202,7 +202,7 @@ fun Card(context: CardModel, funPatch: () -> Unit, funDelete: () -> Unit) {
 fun GreetingPreview() {
     WoofJooyTheme {
         Card(
-            CardModel(
+            Servico(
                 status = "Aguardando Confirmação",
                 dataInicio = LocalDateTime.now(),
                 dataFim = LocalDateTime.now(),

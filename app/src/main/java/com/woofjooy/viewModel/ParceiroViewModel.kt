@@ -11,15 +11,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-//class ParceiroViewModel : ViewModel(){
-//
-//
-//    val parceiroAtual = MutableLiveData(ParceiroPerfil())
-//    val parceiros = MutableLiveData(SnapshotStateList<ParceiroPerfil>())
-//
-//    val apiBack = RetrofitService.getApi()
-//    val erroApi = MutableLiveData("")
-//
+class ParceiroViewModel(token:String?) : ViewModel(){
+
+
+    val parceiroAtual = MutableLiveData(ParceiroPerfil())
+    val parceiros = MutableLiveData(SnapshotStateList<ParceiroPerfil>())
+
+    val api = RetrofitService.getApiParceiro(token)
+    val erroApi = MutableLiveData("")
+
 //    init {
 //        carregarTodos()
 //    }
@@ -94,4 +94,4 @@ import kotlinx.coroutines.launch
 //            }
 //        }
 //    }
-//}
+}

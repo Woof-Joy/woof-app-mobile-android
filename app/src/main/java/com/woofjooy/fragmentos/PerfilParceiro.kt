@@ -26,11 +26,11 @@ import androidx.compose.ui.unit.sp
 import com.woofjooy.R
 import com.woofjooy.components.Botao
 import com.woofjooy.components.CardServico
-import com.woofjooy.datas.Servico
+import com.woofjooy.datas.ServicoOld
 
 
 @Composable
-fun PerfilParceiro(nome: String?, endereco: String?, descricao: String?, servicos: List<Servico>?){
+fun PerfilParceiro(nome: String?, endereco: String?, descricao: String?, servicos: List<ServicoOld>?){
     Column (modifier = Modifier
         .fillMaxSize()
         .background(color = colorResource(R.color.rosa_claro)),

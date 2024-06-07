@@ -2,7 +2,6 @@ package com.woofjooy.datas
 
 import android.os.Parcel
 import android.os.Parcelable
-import java.time.LocalDate
 
 data class Parceiro(
     val idUser:Int? = null,
@@ -16,7 +15,7 @@ data class Parceiro(
     val aceitaDogGrande:Boolean? = null,
     val aceitaDogCio:Boolean? = null,
     val descricao:String? = null,
-    val servicos:List<Servico>? = null,
+    val servicos:List<ServicoOld>? = null,
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readValue(Int::class.java.classLoader) as? Int,
@@ -30,7 +29,7 @@ data class Parceiro(
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
         parcel.readString(),
-        parcel.createTypedArrayList(Servico.CREATOR)
+        parcel.createTypedArrayList(ServicoOld.CREATOR)
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

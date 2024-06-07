@@ -87,7 +87,6 @@ fun Home(navController: NavHostController, extras: Bundle?,modifier: Modifier = 
                 })
             }
         }
-
         Row(
             modifier = Modifier
                 .background(color = colorResource(R.color.rosa_escuro))
