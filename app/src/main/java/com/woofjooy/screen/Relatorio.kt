@@ -50,7 +50,7 @@ class Relatorio : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Relatorio("Android")
+                    Relatorio()
                 }
             }
         }
@@ -58,7 +58,7 @@ class Relatorio : ComponentActivity() {
 }
 
 @Composable
-fun Relatorio(name: String, modifier: Modifier = Modifier) {
+fun Relatorio(modifier: Modifier = Modifier) {
 
     var relatorioText by remember { mutableStateOf(TextFieldValue()) }
 
