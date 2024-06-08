@@ -1,4 +1,4 @@
-package com.woofjooy.components
+package com.woofjooy.screen
 
 import android.os.Bundle
 import android.widget.Button
@@ -43,6 +43,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.woofjooy.R
+import com.woofjooy.components.Botao
+import com.woofjooy.components.Input
+import com.woofjooy.components.Title
 import com.woofjooy.screen.ui.theme.WoofJooyTheme
 import kotlin.reflect.KProperty
 
@@ -127,7 +130,7 @@ fun MeuPerfilParceiro(name: String, modifier: Modifier = Modifier){
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)
-                ){
+            ){
                 Input(valCampo = nomeNovo, "Nome", modifier = Modifier
                     .background(
                         color = colorResource(R.color.cinza),
@@ -246,63 +249,68 @@ fun MeuPerfilParceiro(name: String, modifier: Modifier = Modifier){
                     .padding(bottom = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
-                Column (
-                    modifier = Modifier
-                        .background(
-                            colorResource(R.color.rosa_claro),
-                            shape = RoundedCornerShape(20.dp)
-                        )
-                        .size(160.dp, 90.dp)
-                        .padding(20.dp),
-                ) {
-                    Row (
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 8.dp)
-                    ) {
-                        Text(
-                            text = "Dog Walker",
-                            color = colorResource(R.color.rosa_escuro),
-                            fontSize = 18.sp,
-                            style = TextStyle(fontWeight = FontWeight.Medium)
-                        )
-                    }
 
-                    Row {
-                        Text(
-                            text = "R$ ${precoDWalkerAtual} / Passeio",
-                            fontSize = 12.sp,
-                        )
+                if (checkedDogWalker.value){
+                    Column (
+                        modifier = Modifier
+                            .background(
+                                colorResource(R.color.rosa_claro),
+                                shape = RoundedCornerShape(20.dp)
+                            )
+                            .size(160.dp, 90.dp)
+                            .padding(20.dp),
+                    ) {
+                        Row (
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp)
+                        ) {
+                            Text(
+                                text = "Dog Walker",
+                                color = colorResource(R.color.rosa_escuro),
+                                fontSize = 18.sp,
+                                style = TextStyle(fontWeight = FontWeight.Medium)
+                            )
+                        }
+
+                        Row {
+                            Text(
+                                text = "R$ ${precoDWalkerAtual} / Passeio",
+                                fontSize = 12.sp,
+                            )
+                        }
                     }
                 }
 
-                Column (
-                    modifier = Modifier
-                        .background(
-                            colorResource(R.color.rosa_claro),
-                            shape = RoundedCornerShape(20.dp)
-                        )
-                        .size(160.dp, 90.dp)
-                        .padding(20.dp),
-                ) {
-                    Row (
+                if(checkedDogSitter.value){
+                    Column (
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 8.dp)
-                    ){
-                        Text(
-                            text = "Dog Sitter",
-                            color = colorResource(R.color.rosa_escuro),
-                            fontSize = 18.sp,
-                            style = TextStyle(fontWeight = FontWeight.Medium)
-                        )
-                    }
+                            .background(
+                                colorResource(R.color.rosa_claro),
+                                shape = RoundedCornerShape(20.dp)
+                            )
+                            .size(160.dp, 90.dp)
+                            .padding(20.dp),
+                    ) {
+                        Row (
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp)
+                        ){
+                            Text(
+                                text = "Dog Sitter",
+                                color = colorResource(R.color.rosa_escuro),
+                                fontSize = 18.sp,
+                                style = TextStyle(fontWeight = FontWeight.Medium)
+                            )
+                        }
 
-                    Row {
-                        Text(
-                            text = "R$ ${precoDSitterAtual} / Hora",
-                            fontSize = 12.sp,
-                        )
+                        Row {
+                            Text(
+                                text = "R$ ${precoDSitterAtual} / Hora",
+                                fontSize = 12.sp,
+                            )
+                        }
                     }
                 }
             }
@@ -386,7 +394,7 @@ fun MeuPerfilParceiro(name: String, modifier: Modifier = Modifier){
             ) {
                 Column (
                     modifier = Modifier
-                    .padding(end = 30.dp)
+                        .padding(end = 30.dp)
                 ){
                     Row{
                         Text(text = "CEP", style = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp) )
@@ -491,10 +499,10 @@ fun MeuPerfilParceiro(name: String, modifier: Modifier = Modifier){
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun GreetingPreview4() {
-    WoofJooyTheme {
-        MeuPerfilParceiro("teste")
-    }
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun GreetingPreview4() {
+//    WoofJooyTheme {
+//        MeuPerfilParceiro("teste")
+//    }
+//}
