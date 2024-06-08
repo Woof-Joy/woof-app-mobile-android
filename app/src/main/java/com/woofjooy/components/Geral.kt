@@ -89,7 +89,7 @@ fun Botao(texto:String, fontSize: TextUnit, color: Color, background: Color, mod
 
 @Composable
 fun Title(text:String){
-    Text(text, fontSize = 24.sp, style = TextStyle(fontWeight = FontWeight.Bold))
+    Text(text, fontSize = 32.sp, style = TextStyle(fontWeight = FontWeight.Bold))
 }
 
 @Composable
@@ -117,7 +117,7 @@ fun InputSelect(searchText: MutableState<String>, options: List<String>, label:S
     val expanded = remember { mutableStateOf(false) }
     Column {
         if (label.isNotBlank()) {
-            Text(text = label, color = colorResource(R.color.preto), fontSize = 8.sp)
+            Text(text = label, color = colorResource(R.color.preto), fontSize = 15.sp)
         }
         BasicTextField(
             value = searchText.value,
@@ -125,19 +125,16 @@ fun InputSelect(searchText: MutableState<String>, options: List<String>, label:S
             readOnly = true,
             modifier = Modifier
                 .clickable { expanded.value = true }
-                .width(80.dp)
+                .width(160.dp)
                 .padding(top = 5.dp, end = 5.dp)
                 .background(
                     color = colorResource(R.color.cinza),
                     shape = RoundedCornerShape(15.dp)
-                )
+                ).border(20.dp, color = colorResource(R.color.cinza_legenda),
+                    shape = RoundedCornerShape(15.dp))
             ,
             textStyle = LocalTextStyle.current.copy(color = Color.Black)
-        ){
-            if (placeholder.isNotBlank()) {
-                Text(text = label, color = colorResource(R.color.preto), fontSize = 8.sp)
-            }
-        }
+        )
 
         // Lista suspensa de opções
         if (expanded.value) {

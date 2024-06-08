@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -45,6 +46,8 @@ import com.woofjooy.components.Title
 import com.woofjooy.datas.UsuarioLogin
 import com.woofjooy.datas.UsuarioLoginRespose
 import com.woofjooy.ui.theme.WoofJooyTheme
+import com.woofjooy.viewModel.UsuarioViewModel
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,7 +56,6 @@ class Login : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val extras = intent.extras
         setContent {
             WoofJooyTheme {
                 // A surface container using the 'background' color from the theme
@@ -61,7 +63,7 @@ class Login : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Login(extras)
+                    Login()
                 }
             }
         }
@@ -70,16 +72,19 @@ class Login : ComponentActivity() {
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun Login(extras: Bundle?) {
+fun Login(nome:String, modifier: Modifier) {
     val contexto = LocalContext.current
-
+    val usuarioViewModel = UsuarioViewModel(null)
+    val coroutineScope = rememberCoroutineScope()
     val email = remember {
         mutableStateOf("")
     }
     val senha = remember {
         mutableStateOf("")
     }
-    val typePerfil = extras?.getString("typePerfil")
+    val typePerfil = remember {
+        mutableStateOf("P")
+    }
 
 
     Column(
@@ -133,56 +138,13 @@ fun Login(extras: Bundle?) {
                 Spacer(modifier = Modifier.height(16.dp)) // Adiciona um espaçamento entre os TextField e o Button
                 Button(
                     onClick = {
-                        val usuarioLogin = UsuarioLogin(email = email.value, senha = senha.value, role= typePerfil!!)
-                        var usuarioLoginResponse=UsuarioLoginRespose(token = "")
-                        Log.d("api", "${email.value},${senha.value},${typePerfil}")
+                       val usuarioLogin = UsuarioLogin(
+                           email = email.value,
+                           role = "P",
+                           senha = senha.value
+                       )
 
-                        val api = RetrofitService.getApi()
-                        val login = api.login(usuarioLogin)
-                        login.enqueue(object : Callback<UsuarioLoginRespose> {
-                            override fun onResponse(
-                                call: Call<UsuarioLoginRespose>,
-                                response: Response<UsuarioLoginRespose>
-                            ) {
-                                Log.d("api", "DEU CERTO")
-                                if (response.isSuccessful) {
-                                    val usuarioResponse = response.body()
-                                    if (usuarioResponse != null){
-                                        usuarioLoginResponse = usuarioLoginResponse.copy(
-                                            userId = usuarioResponse.userId,
-                                            nome = usuarioResponse.nome,
-                                            email = usuarioResponse.email,
-                                            role = usuarioResponse.role,
-                                            token = usuarioResponse.token,
-                                            nomeCompleto = usuarioResponse.nomeCompleto,
-                                            cpf =usuarioResponse.cpf,
-                                            dataNasc = usuarioResponse.dataNasc,
-                                            descricao = usuarioResponse.descricao,
-                                            imgUsuario = usuarioResponse.imgUsuario,
-                                            senha = usuarioResponse.senha,
-                                            listItens = usuarioResponse.listItens,
-                                            cliente = usuarioResponse.cliente,
-                                            parceiro = usuarioResponse.parceiro
-                                        )
-
-                                        val home = Intent(contexto, Home::class.java)
-                                        home.putExtra("userToken", usuarioLoginResponse.token)
-                                        home.putExtra("dataUser", usuarioLoginResponse)
-                                        contexto.startActivity(home)
-
-                                    }
-                                } else {
-                                    print("Erro ao tentar executar a função")
-                                }
-                            }
-                            override fun onFailure(call: Call<UsuarioLoginRespose>, t: Throwable) {
-                                Log.d("api", "ERRO")
-                            }
-                        })
-
-
-
-
+                        usuarioViewModel.login(usuarioLogin=usuarioLogin, contexto=contexto)
 
                     },
                     modifier = Modifier

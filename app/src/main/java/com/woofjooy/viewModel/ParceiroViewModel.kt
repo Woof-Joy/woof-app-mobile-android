@@ -1,23 +1,25 @@
-//package com.woofjooy.viewModel
-//
-//import androidx.compose.runtime.snapshots.SnapshotStateList
-//import androidx.lifecycle.MutableLiveData
-//import androidx.lifecycle.ViewModel
-//import com.woofjooy.client.RetrofitService
-//import com.woofjooy.datas.ParceiroPerfil
-//import kotlinx.coroutines.CoroutineScope
-//import kotlinx.coroutines.Dispatchers
-//import kotlinx.coroutines.launch
-//
-//class ParceiroViewModel : ViewModel(){
-//
-//
-//    val parceiroAtual = MutableLiveData(ParceiroPerfil())
-//    val parceiros = MutableLiveData(SnapshotStateList<ParceiroPerfil>())
-//
-//    val apiBack = RetrofitService.getApi()
-//    val erroApi = MutableLiveData("")
-//
+
+package com.woofjooy.viewModel
+
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.woofjooy.client.RetrofitService
+import com.woofjooy.datas.ParceiroPerfil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+
+class ParceiroViewModel(token:String?) : ViewModel(){
+
+
+    val parceiroAtual = MutableLiveData(ParceiroPerfil())
+    val parceiros = MutableLiveData(SnapshotStateList<ParceiroPerfil>())
+
+    val api = RetrofitService.getApiParceiro(token)
+    val erroApi = MutableLiveData("")
+
 //    init {
 //        carregarTodos()
 //    }
@@ -92,4 +94,4 @@
 //            }
 //        }
 //    }
-//}
+}
