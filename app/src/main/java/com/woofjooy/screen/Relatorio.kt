@@ -1,3 +1,5 @@
+package com.woofjooy.screen
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -137,13 +139,5 @@ fun Relatorio(name: String, modifier: Modifier = Modifier) {
                 }
             )
         }
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun GreetingPreview4() {
-    WoofJooyTheme {
-        Relatorio("Android")
     }
 }
