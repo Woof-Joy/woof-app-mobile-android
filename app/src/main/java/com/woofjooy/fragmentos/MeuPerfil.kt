@@ -3,26 +3,7 @@ package com.woofjooy.fragmentos
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.rememberNavController
-import com.woofjooy.R
-import com.woofjooy.components.Title
-import com.woofjooy.datas.ParceiroFeed
-import com.woofjooy.screen.TelaLogin
-import com.woofjooy.ui.theme.WoofJooyTheme
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable

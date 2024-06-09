@@ -84,38 +84,7 @@ fun MeuServicos(extras: Bundle?, name: String = "Home") {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 items(
-                    items = listOf<Servico>(
-                        Servico(
-                            status = "Aguardando Confirmação",
-                            dataInicio = LocalDateTime.now(),
-                            dataFim = LocalDateTime.now(),
-                            tipoServico = "Dog Walker",
-                            cliente = "Cliente Teste"
-                        ),
-
-                        Servico(
-                            status = "Aguardando Confirmação",
-                            dataInicio = LocalDateTime.now(),
-                            dataFim = LocalDateTime.now(),
-                            tipoServico = "Dog Walker",
-                            cliente = "Cliente Teste"
-                        ),
-
-                        Servico(
-                            status = "Aguardando Confirmação",
-                            dataInicio = LocalDateTime.now(),
-                            dataFim = LocalDateTime.now(),
-                            tipoServico = "Dog Walker",
-                            cliente = "Cliente Teste"
-                        ),
-                        Servico(
-                            status = "Aguardando Confirmação",
-                            dataInicio = LocalDateTime.now(),
-                            dataFim = LocalDateTime.now(),
-                            tipoServico = "Dog Walker",
-                            cliente = "Cliente Teste"
-                        ),
-                    )
+                    items = servicos
                 ) {
                     Card(
                         it,
@@ -134,3 +103,37 @@ fun MeuServicos(extras: Bundle?, name: String = "Home") {
     //CARDS
 
 }
+
+
+//listOf<Servico>(
+//Servico(
+//status = "Aguardando Confirmação",
+//dataInicio = LocalDateTime.now(),
+//dataFim = LocalDateTime.now(),
+//tipoServico = "Dog Walker",
+//cliente = "Cliente Teste"
+//),
+//
+//Servico(
+//status = "Aguardando Confirmação",
+//dataInicio = LocalDateTime.now(),
+//dataFim = LocalDateTime.now(),
+//tipoServico = "Dog Walker",
+//cliente = "Cliente Teste"
+//),
+//
+//Servico(
+//status = "Aguardando Confirmação",
+//dataInicio = LocalDateTime.now(),
+//dataFim = LocalDateTime.now(),
+//tipoServico = "Dog Walker",
+//cliente = "Cliente Teste"
+//),
+//Servico(
+//status = "Aguardando Confirmação",
+//dataInicio = LocalDateTime.now(),
+//dataFim = LocalDateTime.now(),
+//tipoServico = "Dog Walker",
+//cliente = "Cliente Teste"
+//),
+//)

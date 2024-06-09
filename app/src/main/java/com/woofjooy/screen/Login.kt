@@ -1,9 +1,7 @@
 package com.woofjooy.screen
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
@@ -20,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -37,20 +36,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.woofjooy.R
-import com.woofjooy.client.RetrofitService
 import com.woofjooy.components.Input
 import com.woofjooy.components.Title
 import com.woofjooy.datas.UsuarioLogin
-import com.woofjooy.datas.UsuarioLoginRespose
 import com.woofjooy.ui.theme.WoofJooyTheme
 import com.woofjooy.viewModel.UsuarioViewModel
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class Login : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -72,7 +67,7 @@ class Login : ComponentActivity() {
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun Login(nome:String, modifier: Modifier) {
+fun TelaLogin(nome:String, modifier: Modifier) {
     val contexto = LocalContext.current
     val usuarioViewModel = UsuarioViewModel(null)
     val coroutineScope = rememberCoroutineScope()
@@ -134,7 +129,10 @@ fun Login(nome:String, modifier: Modifier) {
                         shape = RoundedCornerShape(50.dp)
                     )
                     .width(300.dp)
-                    .padding(10.dp))
+                    .padding(10.dp),
+                    visualTransformation = PasswordVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                    )
                 Spacer(modifier = Modifier.height(16.dp)) // Adiciona um espaçamento entre os TextField e o Button
                 Button(
                     onClick = {

@@ -2,6 +2,7 @@ package com.woofjooy.components
 
 import android.content.Context
 import android.content.Intent
+import android.text.method.SingleLineTransformationMethod
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.LocalTextStyle
@@ -25,10 +27,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -98,7 +100,10 @@ fun Input(
     label: String = "",
     placeholder: String = "",
     fontSize: TextUnit = 16.sp,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    singleLine:Boolean=true,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
 ) {
     Column {
         if (label.isNotBlank()) {
@@ -108,7 +113,10 @@ fun Input(
             value = valCampo.value,
             onValueChange = { valCampo.value = it },
             modifier = modifier,
-            textStyle = TextStyle(fontSize = fontSize, color = Color.Black)
+            textStyle = TextStyle(fontSize = fontSize, color = Color.Black),
+            singleLine = singleLine,
+            visualTransformation = visualTransformation,
+            keyboardOptions = keyboardOptions
         )
     }
 }
