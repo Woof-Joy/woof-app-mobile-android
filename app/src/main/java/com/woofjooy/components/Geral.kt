@@ -136,7 +136,7 @@ fun InputSelect(searchText: MutableState<String>, options: List<String>, label:S
                 .width(160.dp)
                 .padding(top = 5.dp, end = 5.dp)
                 .background(
-                    color = colorResource(R.color.cinza_legenda),
+                    color = colorResource(R.color.cinza),
                     shape = RoundedCornerShape(15.dp)
                 ).border(20.dp, color = colorResource(R.color.cinza_legenda),
                     shape = RoundedCornerShape(15.dp))

@@ -14,4 +14,7 @@
     <string name="title_activity_perfil_parceiro">PerfilParceiro</string>
     <string name="title_activity_home">Home</string>
     <string name="title_meus_servicos">Meus Servicos</string>
+    <string name="title_relatorio">Relatório</string>
+    <string name="title_meu_perfil_parceiro">Meu Perfil</string>
+    <string name="txt_info_meu_perfil_parceiro">* Para alterações na página de serviço, acessar o site.</string>
 </resources>

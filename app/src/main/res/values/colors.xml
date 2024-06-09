@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="branco">#FFFFFFFF</color>
     <color name="preto">#303030</color>
+    <color name="cinza">#E5E5E5</color>
     <color name="cinza_legenda">#E5E5E5</color>
     <color name="rosa_escuro">#DB4B90</color>
     <color name="rosa_medio">#FFC3C5</color>
