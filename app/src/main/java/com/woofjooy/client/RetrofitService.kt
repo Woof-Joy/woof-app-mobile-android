@@ -1,8 +1,10 @@
 package com.woofjooy.client
 import com.google.gson.GsonBuilder
+import com.woofjooy.datas.Relatorio
 import com.woofjooy.service.CardService
 import com.woofjooy.service.ImagemService
 import com.woofjooy.service.ParceiroService
+import com.woofjooy.service.RelatorioService
 import com.woofjooy.service.ServicesBack
 import com.woofjooy.service.UsuarioService
 import okhttp3.OkHttpClient
@@ -66,6 +68,10 @@ object RetrofitService {
 
     fun getApi(token: String?): ServicesBack {
         return createApiService(ServicesBack::class.java, token)
+    }
+
+    fun getApiRelatorio(token: String?): RelatorioService {
+        return createApiService(RelatorioService::class.java, token)
     }
 
 

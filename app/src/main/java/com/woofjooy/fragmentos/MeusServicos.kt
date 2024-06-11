@@ -41,8 +41,11 @@ fun MeuServicos(extras: Bundle?, name: String = "Home") {
     val ordenacao = remember {
         mutableStateOf("")
     }
-    val options = listOf<String>("Aguardando Inicio", "Aguardando Confimação", "Em Andamento", "Concluído")
-
+    val options =
+        listOf<String>("Aguardando Inicio", "Aguardando Confimação", "Em Andamento", "Concluído")
+    val relatorioAberto = remember {
+        mutableStateOf(false)
+    }
     val context = LocalContext.current
     val servicoViewModel = ServicoViewModel(null)
     val coroutineScope = rememberCoroutineScope()
@@ -88,8 +91,13 @@ fun MeuServicos(extras: Bundle?, name: String = "Home") {
                 ) {
                     Card(
                         it,
-                        funPatch = fun() {},
-                        funDelete = fun() {}
+                        funPatch = fun() {
+                            relatorioAberto.value = true
+
+                        },
+                        funDelete = fun() {
+                            servicoViewModel.delete(it.id, context)
+                        }
 
                     )
                     Spacer(modifier = Modifier.height(10.dp))

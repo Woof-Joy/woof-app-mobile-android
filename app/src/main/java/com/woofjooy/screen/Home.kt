@@ -31,7 +31,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.woofjooy.R
 
-import com.woofjooy.fragmentos.MeuPerfil
+import com.woofjooy.fragmentos.MeuPerfilParceiro
 import com.woofjooy.fragmentos.MeuServicos
 
 import com.woofjooy.fragmentos.Sair
@@ -75,8 +75,7 @@ fun Home(navController: NavHostController, extras: Bundle?,modifier: Modifier = 
                 MeuServicos(extras = extras)
             }
             composable(TelasFragmentos.TELA2.name) {
-                MeuPerfil(extras = extras)
-
+                MeuPerfilParceiro()
             }
             composable(TelasFragmentos.TELA3.name) {
                 Sair({

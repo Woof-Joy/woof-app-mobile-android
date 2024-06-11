@@ -1,9 +1,8 @@
-package com.woofjooy.screen
+package com.woofjooy.components
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -29,17 +28,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.woofjooy.R
-import com.woofjooy.components.Botao
-import com.woofjooy.components.Title
 import com.woofjooy.ui.theme.WoofJooyTheme
+import com.woofjooy.viewModel.RelatorioViewModel
 
 class Relatorio : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +58,8 @@ class Relatorio : ComponentActivity() {
 fun Relatorio(modifier: Modifier = Modifier) {
 
     var relatorioText by remember { mutableStateOf(TextFieldValue()) }
-
+    val relatorioViewModel = RelatorioViewModel(null)
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -135,7 +133,7 @@ fun Relatorio(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .size(400.dp, 40.dp),
                 onClick = {
-                    // Implementar ação do botão aqui
+                    relatorioViewModel.fetchRelatorio(0, context)// Alterar para o id do Servico
                 }
             )
         }

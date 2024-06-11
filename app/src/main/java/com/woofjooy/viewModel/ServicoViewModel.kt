@@ -1,12 +1,14 @@
 package com.woofjooy.viewModel
 
 import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woofjooy.client.RetrofitService
 import com.woofjooy.datas.Servico
+import com.woofjooy.screen.Home
 import com.woofjooy.store.StoreServicos
 import kotlinx.coroutines.launch
 
@@ -44,10 +46,12 @@ class ServicoViewModel(token:String?) : ViewModel(){
         }
     }
 
-    fun delete(id: Int) {
+    fun delete(id: Int, context: Context) {
         viewModelScope.launch {
+            val home: Intent = Intent(context, Home::class.java)
             val response = cardService.delete(id)
             _deleteResult.value = response.isSuccessful
+            context.startActivity(home)
         }
     }
 
